@@ -2,10 +2,19 @@
  * GameStatus constants
  */
 export const GameStatuses = {
-  WAITING: 'WAITING',  // waiting player to join
-  STARTED: 'STARTED',  // all spots are filled; can start playing
+  WAITING: 'WAITING', // waiting player to join
+  STARTED: 'STARTED', // all spots are filled; can start playing
   FINISHED: 'FINISHED', // game is finished
   ABANDONED: 'ABANDONED' // all players left; game is abandoned
+}
+
+/**
+ * GameSteps constants
+ */
+export const GameSteps = {
+  SETUP: 'SETUP',
+  PLANNING: 'PLANNING',
+  EXECUTING: 'EXECUTING'
 }
 
 /**
@@ -27,21 +36,34 @@ export class Game {
       _.extend(this, gameDoc);
     } else {
       this.status = GameStatuses.WAITING;
-      this.board = [[null, null, null], [null, null, null], [null, null, null]];
+      this.step = GameSteps.SETUP;
+      this.board = [
+        [null, null, null],
+        [null, null, null],
+        [null, null, null]
+      ];
       this.players = [];
+      this.hands = [
+        [],
+        []
+      ];
+      this.discards = [
+        [],
+        []
+      ];
     }
   }
 
-/**
+  /**
    * Return a list of fields that are required for permanent storage
    *
    * @return {[]String] List of fields required persistent storage
    */
   persistentFields() {
-    return ['status', 'board', 'players'];
+    return ['status', 'step', 'board', 'players', 'hands', 'discards'];
   }
 
-/**
+  /**
    * Handle join game action
    *
    * @param {User} user Meteor.user object
@@ -54,18 +76,18 @@ export class Game {
       throw "user already in game";
     }
 
-this.players.push({
+    this.players.push({
       userId: user._id,
       username: user.username
     });
 
-// game automatically start with 2 players
+    //game automatically start with 2 players
     if (this.players.length === 2) {
       this.status = GameStatuses.STARTED;
     }
   }
 
-/**
+  /**
    * Handle leave game action
    *
    * @param {User} user Meteor.user object
@@ -81,13 +103,13 @@ this.players.push({
       return player.userId === user._id;
     });
 
-// game is considered abandoned when all players left
+    // game is considered abandoned when all players left
     if (this.players.length === 0) {
       this.status = GameStatuses.ABANDONED;
     }
   }
 
-/**
+  /**
    * Handle user action. i.e. putting marker on the game board
    *
    * @param {User} user
@@ -117,7 +139,7 @@ this.players.push({
     }
   }
 
- /**
+  /**
    * @return {Number} currentPlayerIndex 0 or 1
    */
   currentPlayerIndex() {
@@ -125,13 +147,13 @@ this.players.push({
       return null;
     }
 
-// determine the current player by counting the filled cells
+    // determine the current player by counting the filled cells
     // if even, then it's first player, otherwise it's second player
     let filledCount = this._filledCount();
-    return (filledCount % 2 === 0? 0: 1);
+    return (filledCount % 2 === 0 ? 0 : 1);
   }
 
-/**
+  /**
    * Determine the winner of the game
    *
    * @return {Number} playerIndex of the winner (0 or 1). null if not finished
@@ -148,7 +170,7 @@ this.players.push({
         if (allMarked) return playerIndex;
       }
 
-// check cols
+      // check cols
       for (let c = 0; c < 3; c++) {
         let allMarked = true;
         for (let r = 0; r < 3; r++) {
@@ -157,7 +179,7 @@ this.players.push({
         if (allMarked) return playerIndex;
       }
 
-// check diagonals
+      // check diagonals
       if (board[0][0] === playerIndex && board[1][1] === playerIndex && board[2][2] === playerIndex) {
         return playerIndex;
       }
@@ -168,7 +190,7 @@ this.players.push({
     return null;
   }
 
-/**
+  /**
    * Helper method to retrieve the player index of a user
    *
    * @param {User} user Meteor.user object
@@ -181,15 +203,5 @@ this.players.push({
       }
     }
     return null;
-  }
-
-  _filledCount() {
-    let filledCount = 0;
-    for (let r = 0; r < 3; r++) {
-      for (let c = 0; c < 3; c++) {
-        if (this.board[r][c] !== null) filledCount++;
-      }
-    }
-    return filledCount;
   }
 }

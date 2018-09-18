@@ -1,5 +1,9 @@
-import { Mongo } from 'meteor/mongo';
-import { Game } from '../models/game.js';
+import {
+  Mongo
+} from 'meteor/mongo';
+import {
+  Game
+} from '../models/game.js';
 
 export default Games = new Mongo.Collection('games', {
   transform(doc) {

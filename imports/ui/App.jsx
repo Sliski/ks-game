@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { createContainer } from 'meteor/react-meteor-data';
+import React, {Component} from 'react';
+import {createContainer} from 'meteor/react-meteor-data';
 import Games from '../api/collections/games.js';
 import GameList from './GameList.jsx';
 import GameBoard from './GameBoard.jsx';
@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedGameId: null,
+      selectedGameId: null
     }
   }
 
@@ -30,27 +30,15 @@ class App extends Component {
 
   render() {
     if (!this.props.user) {
-      return (
-        <div>
-          <LoginForm/>
-        </div>
-      )
+      return (<div>
+        <LoginForm/>
+      </div>)
     }
 
     if (this.state.selectedGameId === null) {
-      return (
-        <GameList
-          games={this.props.games}
-          enterGameHandler={this.handleEnterGame.bind(this)}
-          user={this.props.user}/>
-      )
+      return (<GameList games={this.props.games} enterGameHandler={this.handleEnterGame.bind(this)} user={this.props.user}/>)
     } else {
-      return (
-        <GameBoard
-          game={this.selectedGame()}
-          backToGameListHandler={this.handleBackToGameList.bind(this)}
-          user={this.props.user}/>
-      )
+      return (<GameBoard game={this.selectedGame()} backToGameListHandler={this.handleBackToGameList.bind(this)} user={this.props.user}/>)
     }
   }
 }
@@ -58,8 +46,5 @@ class App extends Component {
 export default createContainer(() => {
   Meteor.subscribe('games');
 
-  return {
-    user: Meteor.user(),
-    games: Games.find().fetch()
-  };
+  return {user: Meteor.user(), games: Games.find().fetch()};
 }, App);

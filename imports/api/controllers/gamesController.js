@@ -1,4 +1,6 @@
-import {Game} from "../models/game.js";
+import {
+  Game
+} from "../models/game.js";
 import Games from "../collections/games.js";
 
 export let GamesController = {

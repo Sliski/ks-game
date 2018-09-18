@@ -1,5 +1,5 @@
-import { Random } from 'meteor/random'
-import React, { Component } from 'react';
+import {Random} from 'meteor/random'
+import React, {Component} from 'react';
 import GameHeader from './GameHeader.jsx';
 
 export default class LoginForm extends Component {
@@ -7,7 +7,7 @@ export default class LoginForm extends Component {
     super(props);
     this.state = {
       username: '',
-      errorMsg: '',
+      errorMsg: ''
     }
   }
 
@@ -36,28 +36,29 @@ export default class LoginForm extends Component {
   }
 
   render() {
-    return (
-      <div className="ui container">
-        <GameHeader user={this.props.user}/>
+    return (<div className="ui container">
+      <GameHeader user={this.props.user}/>
 
-        <div className="ui segment">
-          <form className={(this.state.errorMsg !== ''? 'error ': '') + "ui form"} name="login-form" onSubmit={this.handleSubmit.bind(this)}>
+      <div className="ui segment">
+        <form className={(
+            this.state.errorMsg !== ''
+            ? 'error '
+            : '') + "ui form"} name="login-form" onSubmit={this.handleSubmit.bind(this)}>
 
-            <div className="ui error message">
-              <div className="header">{this.state.errorMsg}</div>
+          <div className="ui error message">
+            <div className="header">{this.state.errorMsg}</div>
+          </div>
+
+          <div className="inline fields">
+            <div className="field">
+              <input type="text" onChange={this.handleUsernameChange.bind(this)} placeholder="Enter your name"/>
             </div>
-
-            <div className="inline fields">
-              <div className="field">
-                <input type="text" onChange={this.handleUsernameChange.bind(this)} placeholder="Enter your name"/>
-              </div>
-              <div className="field">
-                <input className="ui button" type="submit" value="Login"/>
-              </div>
+            <div className="field">
+              <input className="ui button" type="submit" value="Login"/>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
-    )
+    </div>)
   }
 }
