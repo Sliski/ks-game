@@ -4,21 +4,18 @@ export default class GameBoard extends Component {
   handleLogout() {
     Meteor.logout();
   }
+
   render() {
     return (<div className="ui menu inverted">
       <div className="header item">
-        Online Tic-Tac-Toe
+        Placeholder for header
       </div>
 
       {
         this.props.user
           ? (<div className="right menu">
-            <div className="item">
-              <i className="meh icon"/> {this.props.user.username}
-            </div>
-            <a className="item" onClick={this.handleLogout.bind(this)}>
-              Logout
-            </a>
+            <i className="meh icon"/> {this.props.user.username}
+            <input className="ui button" type="button" onClick={this.handleLogout.bind(this)} value="Logout"/>
           </div>)
           : null
       }
