@@ -46,13 +46,17 @@ export default class Room extends Component {
     return (<div>{status}</div>)
   }
 
+  _leaveOrConcede() {
+    return this.props.game.status === GameStatuses.FINISHED || this.props.game.userIndex(this.props.user) === null;
+  }
+
   render() {
     return (<div>
-      <button onClick={this.props.game.status === GameStatuses.FINISHED
+      <button onClick={this._leaveOrConcede()
           ? this.handleBackToRoomsList.bind(this)
           : this.handleConcede.bind(this)}>
         {
-          this.props.game.status === GameStatuses.FINISHED
+          this._leaveOrConcede()
             ? 'Leave room.'
             : 'Concede.'
         }
