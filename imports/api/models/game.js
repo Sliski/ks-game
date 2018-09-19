@@ -92,6 +92,21 @@ export class Game {
   }
 
   /**
+   * Handle concede.
+   *
+   * @param {User} user Meteor.user object
+   */
+  userConcede(user) {
+    if (this.status !== GameStatuses.STARTED) {
+      throw "cannot concede at current state";
+    }
+    if (this.userIndex(user) === null) {
+      throw "user not in game";
+    }
+    this.status = GameStatuses.FINISHED
+  }
+
+  /**
    * Handle user action. i.e. putting marker on the game board
    *
    * @param {User} user

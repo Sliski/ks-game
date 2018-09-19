@@ -22,6 +22,12 @@ export let RoomsController = {
     Games.saveGame(game);
   },
 
+  userConcedeGame(gameId, user) {
+    let game = Games.findOne(gameId);
+    game.userConcede(user);
+    Games.saveGame(game);
+  },
+
   userMarkGame(gameId, user, row, col) {
     let game = Games.findOne(gameId);
     game.userMark(user, row, col);

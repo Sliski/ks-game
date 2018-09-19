@@ -14,6 +14,10 @@ export default class Room extends Component {
     this.props.backToRoomsListHandler();
   }
 
+  handleConcede() {
+    RoomsController.userConcedeGame(this.props.game, this.props.user)
+  }
+
   renderCell(row, col) {
     let value = this.props.game.board[row][col];
     if (value === 0)
@@ -44,7 +48,15 @@ export default class Room extends Component {
 
   render() {
     return (<div>
-      <button onClick={this.handleBackToRoomsList.bind(this)}>Back</button>
+      <button onClick={this.props.game.status === GameStatuses.FINISHED
+          ? this.handleBackToRoomsList.bind(this)
+          : this.handleConcede.bind(this)}>
+        {
+          this.props.game.status === GameStatuses.FINISHED
+            ? 'Leave room.'
+            : 'Concede.'
+        }
+      </button>
       {this.renderStatus()}
       <table className="game-board">
         <tbody>
