@@ -62,21 +62,17 @@ export default class LoginForm extends Component {
             ? 'error '
             : '') + "ui form"} name="login-form" onSubmit={this.handleLogin.bind(this)}>
 
-          <div>
-            <div>{this.state.errorMsg}</div>
-          </div>
+          <div>{this.state.errorMsg}</div>
 
           <div>
-            <div>
-              <input type="text" onChange={this.handleUsernameChange.bind(this)} placeholder="Login"/>
-            </div>
-            <div>
-              <input type="password" onChange={this.handlePasswordChange.bind(this)} placeholder="Password"/>
-            </div>
-            <div>
-              <input type="submit" value="Login"/>
-              <input type="button" value="Register" onClick={this.handleRegister.bind(this)}/>
-            </div>
+            <input type="text" onChange={this.handleUsernameChange.bind(this)} placeholder="Login"/>
+          </div>
+          <div>
+            <input type="password" onChange={this.handlePasswordChange.bind(this)} placeholder="Password"/>
+          </div>
+          <div>
+            <input type="submit" value="Login"/>
+            <input type="button" value="Register" onClick={this.handleRegister.bind(this)}/>
           </div>
         </form>
       </div>

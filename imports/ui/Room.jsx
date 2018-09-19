@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
-import {GamesController} from '../api/controllers/gamesController.js';
+import {RoomsController} from '../api/controllers/roomsController.js';
 import {Game, GameStatuses} from '../api/models/game.js';
 
-export default class GameBoard extends Component {
+export default class Room extends Component {
   handleCellClick(row, col) {
     let game = this.props.game;
     if (game.currentPlayerIndex() !== game.userIndex(this.props.user))
       return;
-    GamesController.userMarkGame(game._id, this.props.user, row, col);
+    RoomsController.userMarkGame(game._id, this.props.user, row, col);
   }
 
-  handleBackToGameList() {
-    this.props.backToGameListHandler();
+  handleBackToRoomsList() {
+    this.props.backToRoomsListHandler();
   }
 
   renderCell(row, col) {
@@ -44,7 +44,7 @@ export default class GameBoard extends Component {
 
   render() {
     return (<div>
-      <button onClick={this.handleBackToGameList.bind(this)}>Back</button>
+      <button onClick={this.handleBackToRoomsList.bind(this)}>Back</button>
       {this.renderStatus()}
       <table className="game-board">
         <tbody>

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {createContainer} from 'meteor/react-meteor-data';
 import Games from '../api/collections/games.js';
-import GameList from './GameList.jsx';
-import GameBoard from './GameBoard.jsx';
+import RoomsList from './RoomsList.jsx';
+import Room from './Room.jsx';
 import LoginForm from './LoginForm.jsx';
 
 class App extends Component {
@@ -17,7 +17,7 @@ class App extends Component {
     this.setState({selectedGameId: gameId});
   }
 
-  handleBackToGameList() {
+  handleBackToRoomsList() {
     this.setState({selectedGameId: null});
   }
 
@@ -30,15 +30,13 @@ class App extends Component {
 
   render() {
     if (!this.props.user) {
-      return (<div>
-        <LoginForm/>
-      </div>)
+      return (<LoginForm/>)
     }
 
     if (this.state.selectedGameId === null) {
-      return (<GameList games={this.props.games} enterGameHandler={this.handleEnterGame.bind(this)} user={this.props.user}/>)
+      return (<RoomsList games={this.props.games} enterGameHandler={this.handleEnterGame.bind(this)} user={this.props.user}/>)
     } else {
-      return (<GameBoard game={this.selectedGame()} backToGameListHandler={this.handleBackToGameList.bind(this)} user={this.props.user}/>)
+      return (<Room game={this.selectedGame()} backToRoomsListHandler={this.handleBackToRoomsList.bind(this)} user={this.props.user}/>)
     }
   }
 }

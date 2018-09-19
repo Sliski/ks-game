@@ -3,7 +3,7 @@ import {
 } from "../models/game.js";
 import Games from "../collections/games.js";
 
-export let GamesController = {
+export let RoomsController = {
   newGame(user) {
     let game = new Game();
     game.userJoin(user);

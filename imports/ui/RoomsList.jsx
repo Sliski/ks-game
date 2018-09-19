@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
 import UserHeader from './UserHeader.jsx';
-import {GamesController} from '../api/controllers/gamesController.js';
+import {RoomsController} from '../api/controllers/roomsController.js';
 import {Game, GameStatuses} from '../api/models/game.js';
 
-export default class GameList extends Component {
+export default class RoomsList extends Component {
   handleNewGame() {
-    GamesController.newGame(this.props.user);
+    RoomsController.newGame(this.props.user);
   }
 
   handleLeaveGame(gameId) {
-    GamesController.userLeaveGame(gameId, this.props.user);
+    RoomsController.userLeaveGame(gameId, this.props.user);
   }
 
   handleJoinGame(gameId) {
-    GamesController.userJoinGame(gameId, this.props.user);
+    RoomsController.userJoinGame(gameId, this.props.user);
   }
 
   handleEnterGame(gameId) {
