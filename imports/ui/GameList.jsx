@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import UserHeader from './UserHeader.jsx';
 import {GamesController} from '../api/controllers/gamesController.js';
 import {Game, GameStatuses} from '../api/models/game.js';
 
@@ -47,6 +48,8 @@ export default class GameList extends Component {
   render() {
     return (<div>
       <div>
+        <UserHeader user={this.props.user}/>
+
         <h1>List of games</h1>
         {
           this.activeGames().map((game, index) => {

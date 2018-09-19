@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import GameHeader from './GameHeader.jsx';
+import UserHeader from './UserHeader.jsx';
 
 export default class LoginForm extends Component {
   constructor(props) {
@@ -52,30 +52,30 @@ export default class LoginForm extends Component {
   }
 
   render() {
-    return (<div className="ui container">
-      <GameHeader user={this.props.user}/>
+    return (<div>
+      <UserHeader user={this.props.user}/>
 
-      <div className="ui segment">
+      <div>
         <div>Sign in or Register:</div>
         <form className={(
             this.state.errorMsg !== ''
             ? 'error '
             : '') + "ui form"} name="login-form" onSubmit={this.handleLogin.bind(this)}>
 
-          <div className="ui error message">
-            <div className="header">{this.state.errorMsg}</div>
+          <div>
+            <div>{this.state.errorMsg}</div>
           </div>
 
-          <div className="inline fields">
-            <div className="field">
+          <div>
+            <div>
               <input type="text" onChange={this.handleUsernameChange.bind(this)} placeholder="Login"/>
             </div>
-            <div className="field">
+            <div>
               <input type="password" onChange={this.handlePasswordChange.bind(this)} placeholder="Password"/>
             </div>
             <div>
-              <input className="ui button" type="submit" value="Login"/>
-              <input className="ui button" type="button" value="Register" onClick={this.handleRegister.bind(this)}/>
+              <input type="submit" value="Login"/>
+              <input type="button" value="Register" onClick={this.handleRegister.bind(this)}/>
             </div>
           </div>
         </form>
