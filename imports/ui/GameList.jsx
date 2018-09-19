@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
-import GameHeader from './GameHeader.jsx';
+import {GamesController} from '../api/controllers/gamesController.js';
 import {Game, GameStatuses} from '../api/models/game.js';
-import {newGame, userJoinGame, userLeaveGame} from '../api/methods/games.js';
 
 export default class GameList extends Component {
   handleNewGame() {
-    newGame.call({});
+    GamesController.newGame(this.props.user);
   }
 
   handleLeaveGame(gameId) {
-    userLeaveGame.call({gameId: gameId});
+    GamesController.userLeaveGame(gameId, this.props.user);
   }
 
   handleJoinGame(gameId) {
-    userJoinGame.call({gameId: gameId});
+    GamesController.userJoinGame(gameId, this.props.user);
   }
 
   handleEnterGame(gameId) {
@@ -38,91 +37,56 @@ export default class GameList extends Component {
   renderPlayers(game) {
     let player1 = game.players.length > 0
       ? game.players[0].username
-      : '(waiting)';
+      : '';
     let player2 = game.players.length > 1
       ? game.players[1].username
-      : '(waiting)';
-    return (<div>
-      <div>
-        <i className="user icon"></i>
-        {player1}
-      </div>
-      <div>
-        <i className="user icon"></i>
-        {player2}
-      </div>
-    </div>)
+      : '';
+    return (<span>[{player1}] vs [{player2}]</span>)
   }
 
   render() {
-    return (<div className="ui container">
-      <GameHeader user={this.props.user}/>
-
-      <h1 className="ui top attached header">List of games</h1>
-      <div className="ui attached segment">
-        <div className="ui three cards">
-          {
-            this.activeGames().map((game, index) => {
-              return (<div key={game._id} className="ui card">
-                <div className="content">
-                  <div className="header">
-                    {
-                      game.status === GameStatuses.WAITING
-                        ? (<span className="ui right yellow corner label">
-                          <i className="idea icon"/>
-                        </span>)
-                        : null
-                    }
-                    Game {index + 1}
-                  </div>
-                </div>
-                <div className="content">
-                  {this.renderPlayers(game)}
-                </div>
-
-                <div className="extra content">
-                  {/* can leave only if user is in the game, and the game is not started */}
-                  {
-                    this.myCurrentGameId() === game._id && game.status === GameStatuses.WAITING
-                      ? (<button className="ui red button" onClick={this.handleLeaveGame.bind(this, game._id)}>Leave</button>)
-                      : null
-                  }
-
-                  {/* can join only if user is not in any game, and the game is not started */}
-                  {
-                    this.myCurrentGameId() === null && game.status === GameStatuses.WAITING
-                      ? (<button className="ui green button" onClick={this.handleJoinGame.bind(this, game._id)}>Join</button>)
-                      : null
-                  }
-
-                  {/* can enter only if the game is started */}
-                  {
-                    game.status === GameStatuses.STARTED
-                      ? (<button className="ui blue button" onClick={this.handleEnterGame.bind(this, game._id)}>Enter</button>)
-                      : null
-                  }
-
-                  {/* just a invisible dummy button to make up the space */}
-                  <button className="ui button" style={{
-                      visibility: "hidden"
-                    }}>Dummy</button>
-                </div>
-              </div>)
-            })
-          }
-        </div>
-
-        {/* Only show new game button if player is not in any room */}
-      </div>
-      <div className="ui attached segment">
+    return (<div>
+      <div>
+        <h1>List of games</h1>
         {
-          this.myCurrentGameId() === null
-            ? (<div>
-              <button className="ui green button" onClick={this.handleNewGame.bind(this)}>New Game</button>
+          this.activeGames().map((game, index) => {
+            return (<div key={game._id}>
+              <span>Game {index + 1}</span>
+              {this.renderPlayers(game)}
+
+              {/* can leave only if user is in the game, and the game is not started */}
+              {
+                this.myCurrentGameId() === game._id && game.status === GameStatuses.WAITING
+                  ? (<button onClick={this.handleLeaveGame.bind(this, game._id)}>Leave</button>)
+                  : null
+              }
+
+              {/* can join only if user is not in any game, and the game is not started */}
+              {
+                this.myCurrentGameId() === null && game.status === GameStatuses.WAITING
+                  ? (<button onClick={this.handleJoinGame.bind(this, game._id)}>Join</button>)
+                  : null
+              }
+
+              {/* can enter only if the game is started */}
+              {
+                game.status === GameStatuses.STARTED
+                  ? (<button onClick={this.handleEnterGame.bind(this, game._id)}>Enter</button>)
+                  : null
+              }
             </div>)
-            : null
+          })
         }
       </div>
+
+      {/* Only show new game button if player is not in any room */}
+      {
+        this.myCurrentGameId() === null
+          ? (<div>
+            <button onClick={this.handleNewGame.bind(this)}>New Game</button>
+          </div>)
+          : null
+      }
     </div>)
   }
 }

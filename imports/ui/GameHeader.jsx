@@ -8,7 +8,7 @@ export default class GameBoard extends Component {
   render() {
     return (<div className="ui menu inverted">
       <div className="header item">
-        Placeholder for header
+        placeholder-header
       </div>
 
       {

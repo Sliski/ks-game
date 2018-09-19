@@ -20,6 +20,5 @@ shell-server@0.3.1            # Server-side component of the `meteor shell` comm
 react-meteor-data
 underscore
 accounts-password
-aldeed:simple-schema
-mdg:validated-method
 fourseven:scss
+insecure

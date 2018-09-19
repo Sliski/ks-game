@@ -9,15 +9,6 @@ export const GameStatuses = {
 }
 
 /**
- * GameSteps constants
- */
-export const GameSteps = {
-  SETUP: 'SETUP',
-  PLANNING: 'PLANNING',
-  EXECUTING: 'EXECUTING'
-}
-
-/**
  * Game model, encapsulating game-related logics
  * It is data store independent
  */
@@ -36,21 +27,12 @@ export class Game {
       _.extend(this, gameDoc);
     } else {
       this.status = GameStatuses.WAITING;
-      this.step = GameSteps.SETUP;
       this.board = [
         [null, null, null],
         [null, null, null],
         [null, null, null]
       ];
       this.players = [];
-      this.hands = [
-        [],
-        []
-      ];
-      this.discards = [
-        [],
-        []
-      ];
     }
   }
 
@@ -60,7 +42,7 @@ export class Game {
    * @return {[]String] List of fields required persistent storage
    */
   persistentFields() {
-    return ['status', 'step', 'board', 'players', 'hands', 'discards'];
+    return ['status', 'board', 'players'];
   }
 
   /**
@@ -81,7 +63,7 @@ export class Game {
       username: user.username
     });
 
-    //game automatically start with 2 players
+    // game automatically start with 2 players
     if (this.players.length === 2) {
       this.status = GameStatuses.STARTED;
     }
@@ -203,5 +185,15 @@ export class Game {
       }
     }
     return null;
+  }
+
+  _filledCount() {
+    let filledCount = 0;
+    for (let r = 0; r < 3; r++) {
+      for (let c = 0; c < 3; c++) {
+        if (this.board[r][c] !== null) filledCount++;
+      }
+    }
+    return filledCount;
   }
 }

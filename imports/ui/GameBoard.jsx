@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
-import GameHeader from './GameHeader.jsx';
+import {GamesController} from '../api/controllers/gamesController.js';
 import {Game, GameStatuses} from '../api/models/game.js';
-import {userMarkGame} from '../api/methods/games.js';
 
 export default class GameBoard extends Component {
   handleCellClick(row, col) {
     let game = this.props.game;
     if (game.currentPlayerIndex() !== game.userIndex(this.props.user))
       return;
-    userMarkGame.call({gameId: game._id, row: row, col: col});
+    GamesController.userMarkGame(game._id, this.props.user, row, col);
   }
 
   handleBackToGameList() {
@@ -30,7 +29,7 @@ export default class GameBoard extends Component {
     let status = "";
     if (game.status === GameStatuses.STARTED) {
       let playerIndex = game.currentPlayerIndex();
-      status = `Current player: ${game.players[playerIndex].username}`;
+      status = `In Progress: current player: ${game.players[playerIndex].username}`;
     } else if (game.status === GameStatuses.FINISHED) {
       let playerIndex = game.winner();
       if (playerIndex === null) {
@@ -44,53 +43,28 @@ export default class GameBoard extends Component {
   }
 
   render() {
-    return (<div className="ui container">
-      <GameHeader user={this.props.user}/>
-
-      <button className="ui button blue" onClick={this.handleBackToGameList.bind(this)}>Back to Lobby</button>
-
-      <div className="ui top attached header">
-        <div className="ui grid">
-          <div className="ui three column center aligned row">
-            <div className="ui column">
-              {this.props.game.players[0].username}
-              <br/>O
-            </div>
-            <div className="ui column">
-              v.s.
-            </div>
-            <div className="ui column">
-              {this.props.game.players[1].username}
-              <br/>X
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="ui attached center aligned segment">
-        {this.renderStatus()}
-      </div>
-
-      <div className="ui attached segment">
-        <table className="game-board">
-          <tbody>
-            <tr>
-              {this.renderCell(0, 0)}
-              {this.renderCell(0, 1)}
-              {this.renderCell(0, 2)}
-            </tr>
-            <tr>
-              {this.renderCell(1, 0)}
-              {this.renderCell(1, 1)}
-              {this.renderCell(1, 2)}
-            </tr>
-            <tr>
-              {this.renderCell(2, 0)}
-              {this.renderCell(2, 1)}
-              {this.renderCell(2, 2)}
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    return (<div>
+      <button onClick={this.handleBackToGameList.bind(this)}>Back</button>
+      {this.renderStatus()}
+      <table className="game-board">
+        <tbody>
+          <tr>
+            {this.renderCell(0, 0)}
+            {this.renderCell(0, 1)}
+            {this.renderCell(0, 2)}
+          </tr>
+          <tr>
+            {this.renderCell(1, 0)}
+            {this.renderCell(1, 1)}
+            {this.renderCell(1, 2)}
+          </tr>
+          <tr>
+            {this.renderCell(2, 0)}
+            {this.renderCell(2, 1)}
+            {this.renderCell(2, 2)}
+          </tr>
+        </tbody>
+      </table>
     </div>)
   }
 }

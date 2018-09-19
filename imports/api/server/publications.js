@@ -9,7 +9,7 @@ Meteor.publish('games', function() {
     // filtering: only games with WAITING and STARTED statuses
     return Games.find({
       status: {
-        $in: [GameStatuses.WAITING, GameStatuses.STARTED]
+        $in: [GameStatuses.WAITING, GameStatuses.STARTED, GameStatuses.FINISHED]
       }
     });
   } else {
