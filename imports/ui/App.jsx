@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {createContainer} from 'meteor/react-meteor-data';
+import {withTracker} from 'meteor/react-meteor-data';
 import Games from '../api/collections/games.js';
 import RoomsList from './RoomsList.jsx';
 import Room from './Room.jsx';
@@ -41,8 +41,8 @@ class App extends Component {
   }
 }
 
-export default createContainer(() => {
+export default withTracker(() => {
   Meteor.subscribe('games');
 
   return {user: Meteor.user(), games: Games.find().fetch()};
-}, App);
+})(App);
