@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import RoomsController from '../api/controllers/roomsController.js';
-import { Game, GameStatuses } from '../api/models/game.js';
+import { GameStatuses } from '../api/models/game.js';
 
 export default class Room extends Component {
   handleCellClick(row, col) {
@@ -17,11 +17,18 @@ export default class Room extends Component {
     RoomsController.userConcedeGame(this.props.game, this.props.user);
   }
 
+  _leaveOrConcede() {
+    return (
+      this.props.game.status === GameStatuses.FINISHED
+      || this.props.game.userIndex(this.props.user) === null
+    );
+  }
+
   renderCell(row, col) {
     const value = this.props.game.board[row][col];
     if (value === 0) return <td>O</td>;
     if (value === 1) return <td>X</td>;
-    if (value === null) return <td onClick={this.handleCellClick.bind(this, row, col)} />;
+    return <td onClick={this.handleCellClick.bind(this, row, col)} />;
   }
 
   renderStatus() {
@@ -42,17 +49,11 @@ export default class Room extends Component {
     return <div>{status}</div>;
   }
 
-  _leaveOrConcede() {
-    return (
-      this.props.game.status === GameStatuses.FINISHED
-      || this.props.game.userIndex(this.props.user) === null
-    );
-  }
-
   render() {
     return (
       <div>
         <button
+          type="button"
           onClick={
             this._leaveOrConcede()
               ? this.handleBackToRoomsList.bind(this)

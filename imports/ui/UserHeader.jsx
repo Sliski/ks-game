@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 export default class UserHeader extends Component {
   handleLogout() {
@@ -6,19 +6,20 @@ export default class UserHeader extends Component {
   }
 
   render() {
-    return (<div>
+    return (
       <div>
-        placeholder-header
-      </div>
+        <div>placeholder-header</div>
 
-      {
-        this.props.user
-          ? (<div>
-            <div>Logged as {this.props.user.username}</div>
-            <input type="button" onClick={this.handleLogout.bind(this)} value="Logout"/>
-          </div>)
-          : null
-      }
-    </div>)
+        {this.props.user ? (
+          <div>
+            <div>
+              Logged as
+              {this.props.user.username}
+            </div>
+            <input type="button" onClick={this.handleLogout.bind(this)} value="Logout" />
+          </div>
+        ) : null}
+      </div>
+    );
   }
 }

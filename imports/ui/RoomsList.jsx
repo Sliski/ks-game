@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import UserHeader from './UserHeader.jsx';
 import RoomsController from '../api/controllers/roomsController.js';
-import { Game, GameStatuses } from '../api/models/game.js';
+import { GameStatuses } from '../api/models/game.js';
 
 export default class RoomsList extends Component {
   handleNewGame() {
@@ -28,7 +28,10 @@ export default class RoomsList extends Component {
   }
 
   myCurrentGameId() {
-    const game = _.find(this.activeGames(), game => game.userIndex(this.props.user) !== null);
+    const game = _.find(
+      this.activeGames(),
+      activeGame => activeGame.userIndex(this.props.user) !== null,
+    );
     return game === undefined ? null : game._id;
   }
 
@@ -63,17 +66,23 @@ export default class RoomsList extends Component {
 
               {/* can leave only if user is in the game, and the game is not started */}
               {this.myCurrentGameId() === game._id && game.status === GameStatuses.WAITING ? (
-                <button onClick={this.handleLeaveGame.bind(this, game._id)}>Leave</button>
+                <button type="button" onClick={this.handleLeaveGame.bind(this, game._id)}>
+                  Leave
+                </button>
               ) : null}
 
               {/* can join only if user is not in any game, and the game is not started */}
               {this.myCurrentGameId() === null && game.status === GameStatuses.WAITING ? (
-                <button onClick={this.handleJoinGame.bind(this, game._id)}>Join</button>
+                <button type="button" onClick={this.handleJoinGame.bind(this, game._id)}>
+                  Join
+                </button>
               ) : null}
 
               {/* can enter only if the game is started */}
               {game.status === GameStatuses.STARTED ? (
-                <button onClick={this.handleEnterGame.bind(this, game._id)}>Enter</button>
+                <button type="button" onClick={this.handleEnterGame.bind(this, game._id)}>
+                  Enter
+                </button>
               ) : null}
             </div>
           ))}
@@ -82,7 +91,9 @@ export default class RoomsList extends Component {
         {/* Only show new game button if player is not in any room */}
         {this.myCurrentGameId() === null ? (
           <div>
-            <button onClick={this.handleNewGame.bind(this)}>New Game</button>
+            <button type="button" onClick={this.handleNewGame.bind(this)}>
+              New Game
+            </button>
           </div>
         ) : null}
       </div>

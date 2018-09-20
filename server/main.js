@@ -1,7 +1,4 @@
-import {
-  Meteor
-} from 'meteor/meteor';
-import Games from '../imports/api/collections/games.js'; // import Games collection
+import { Meteor } from 'meteor/meteor';
 import '../imports/api/server/publications.js';
 
 Meteor.startup(() => {});

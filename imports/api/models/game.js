@@ -5,8 +5,8 @@ export const GameStatuses = {
   WAITING: 'WAITING', // waiting player to join
   STARTED: 'STARTED', // all spots are filled; can start playing
   FINISHED: 'FINISHED', // game is finished
-  ABANDONED: 'ABANDONED' // all players left; game is abandoned
-}
+  ABANDONED: 'ABANDONED', // all players left; game is abandoned
+};
 
 /**
  * Game model, encapsulating game-related logics
@@ -27,11 +27,7 @@ export class Game {
       _.extend(this, gameDoc);
     } else {
       this.status = GameStatuses.WAITING;
-      this.board = [
-        [null, null, null],
-        [null, null, null],
-        [null, null, null]
-      ];
+      this.board = [[null, null, null], [null, null, null], [null, null, null]];
       this.players = [];
     }
   }
@@ -52,15 +48,15 @@ export class Game {
    */
   userJoin(user) {
     if (this.status !== GameStatuses.WAITING) {
-      throw "cannot join at current state";
+      throw new Error('cannot join at current state');
     }
     if (this.userIndex(user) !== null) {
-      throw "user already in game";
+      throw new Error('user already in game');
     }
 
     this.players.push({
       userId: user._id,
-      username: user.username
+      username: user.username,
     });
 
     // game automatically start with 2 players
@@ -76,14 +72,12 @@ export class Game {
    */
   userLeave(user) {
     if (this.status !== GameStatuses.WAITING) {
-      throw "cannot leave at current state";
+      throw new Error('cannot leave at current state');
     }
     if (this.userIndex(user) === null) {
-      throw "user not in game";
+      throw new Error('user not in game');
     }
-    this.players = _.reject(this.players, (player) => {
-      return player.userId === user._id;
-    });
+    this.players = _.reject(this.players, player => player.userId === user._id);
 
     // game is considered abandoned when all players left
     if (this.players.length === 0) {
@@ -98,12 +92,12 @@ export class Game {
    */
   userConcede(user) {
     if (this.status !== GameStatuses.STARTED) {
-      throw "cannot concede at current state";
+      throw new Error('cannot concede at current state');
     }
     if (this.userIndex(user) === null) {
-      throw "user not in game";
+      throw new Error('user not in game');
     }
-    this.status = GameStatuses.FINISHED
+    this.status = GameStatuses.FINISHED;
   }
 
   /**
@@ -114,20 +108,20 @@ export class Game {
    * @param {Number} col Col index of the board
    */
   userMark(user, row, col) {
-    let playerIndex = this.userIndex(user);
-    let currentPlayerIndex = this.currentPlayerIndex();
+    const playerIndex = this.userIndex(user);
+    const currentPlayerIndex = this.currentPlayerIndex();
     if (currentPlayerIndex !== playerIndex) {
-      throw "user cannot make move at current state";
+      throw new Error('user cannot make move at current state');
     }
     if (row < 0 || row >= this.board.length || col < 0 || col >= this.board[row].length) {
-      throw "invalid row|col input";
+      throw new Error('invalid row|col input');
     }
     if (this.board[row][col] !== null) {
-      throw "spot is filled";
+      throw new Error('spot is filled');
     }
     this.board[row][col] = playerIndex;
 
-    let winner = this.winner();
+    const winner = this.winner();
     if (winner !== null) {
       this.status = GameStatuses.FINISHED;
     }
@@ -146,8 +140,8 @@ export class Game {
 
     // determine the current player by counting the filled cells
     // if even, then it's first player, otherwise it's second player
-    let filledCount = this._filledCount();
-    return (filledCount % 2 === 0 ? 0 : 1);
+    const filledCount = this._filledCount();
+    return filledCount % 2 === 0 ? 0 : 1;
   }
 
   /**
@@ -156,31 +150,39 @@ export class Game {
    * @return {Number} playerIndex of the winner (0 or 1). null if not finished
    */
   winner() {
-    let board = this.board;
-    for (let playerIndex = 0; playerIndex < 2; playerIndex++) {
+    const board = this.board;
+    for (let playerIndex = 0; playerIndex < 2; playerIndex += 1) {
       // check rows
-      for (let r = 0; r < 3; r++) {
+      for (let r = 0; r < 3; r += 1) {
         let allMarked = true;
-        for (let c = 0; c < 3; c++) {
+        for (let c = 0; c < 3; c += 1) {
           if (board[r][c] !== playerIndex) allMarked = false;
         }
         if (allMarked) return playerIndex;
       }
 
       // check cols
-      for (let c = 0; c < 3; c++) {
+      for (let c = 0; c < 3; c += 1) {
         let allMarked = true;
-        for (let r = 0; r < 3; r++) {
+        for (let r = 0; r < 3; r += 1) {
           if (board[r][c] !== playerIndex) allMarked = false;
         }
         if (allMarked) return playerIndex;
       }
 
       // check diagonals
-      if (board[0][0] === playerIndex && board[1][1] === playerIndex && board[2][2] === playerIndex) {
+      if (
+        board[0][0] === playerIndex
+        && board[1][1] === playerIndex
+        && board[2][2] === playerIndex
+      ) {
         return playerIndex;
       }
-      if (board[0][2] === playerIndex && board[1][1] === playerIndex && board[2][0] === playerIndex) {
+      if (
+        board[0][2] === playerIndex
+        && board[1][1] === playerIndex
+        && board[2][0] === playerIndex
+      ) {
         return playerIndex;
       }
     }
@@ -194,7 +196,7 @@ export class Game {
    * @return {Number} index 0-based index, or null if not found
    */
   userIndex(user) {
-    for (let i = 0; i < this.players.length; i++) {
+    for (let i = 0; i < this.players.length; i += 1) {
       if (this.players[i].userId === user._id) {
         return i;
       }
@@ -204,9 +206,9 @@ export class Game {
 
   _filledCount() {
     let filledCount = 0;
-    for (let r = 0; r < 3; r++) {
-      for (let c = 0; c < 3; c++) {
-        if (this.board[r][c] !== null) filledCount++;
+    for (let r = 0; r < 3; r += 1) {
+      for (let c = 0; c < 3; c += 1) {
+        if (this.board[r][c] !== null) filledCount += 1;
       }
     }
     return filledCount;
