@@ -1,36 +1,36 @@
-import {
-  Game
-} from "../models/game.js";
-import Games from "../collections/games.js";
+import { Game } from '../models/game.js';
+import Games from '../collections/games.js';
 
-export let RoomsController = {
+const RoomsController = {
   newGame(user) {
-    let game = new Game();
+    const game = new Game();
     game.userJoin(user);
     Games.saveGame(game);
   },
 
   userJoinGame(gameId, user) {
-    let game = Games.findOne(gameId);
+    const game = Games.findOne(gameId);
     game.userJoin(user);
     Games.saveGame(game);
   },
 
   userLeaveGame(gameId, user) {
-    let game = Games.findOne(gameId);
+    const game = Games.findOne(gameId);
     game.userLeave(user);
     Games.saveGame(game);
   },
 
   userConcedeGame(gameId, user) {
-    let game = Games.findOne(gameId);
+    const game = Games.findOne(gameId);
     game.userConcede(user);
     Games.saveGame(game);
   },
 
   userMarkGame(gameId, user, row, col) {
-    let game = Games.findOne(gameId);
+    const game = Games.findOne(gameId);
     game.userMark(user, row, col);
     Games.saveGame(game);
-  }
-}
+  },
+};
+
+export { RoomsController as default };
