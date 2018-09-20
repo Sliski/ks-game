@@ -48,6 +48,10 @@ export default class LoginForm extends Component {
 
     const username = this.state.username.trim();
     const password = this.state.password.trim();
+    if (username === '') {
+      this.setState({ errorMsg: 'Login is required.' });
+      return;
+    }
 
     Meteor.loginWithPassword(username, password, (error) => {
       if (error) {
