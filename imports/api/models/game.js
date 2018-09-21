@@ -150,7 +150,7 @@ export class Game {
    * @return {Number} playerIndex of the winner (0 or 1). null if not finished
    */
   winner() {
-    const board = this.board;
+    const { board } = this;
     for (let playerIndex = 0; playerIndex < 2; playerIndex += 1) {
       // check rows
       for (let r = 0; r < 3; r += 1) {
