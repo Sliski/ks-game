@@ -113,7 +113,6 @@ export class Game {
       throw new Error('invalid row|col input');
     }
     this.board[row][col].push('aaa');
-    console.log(`User mark ${row}${col}`);
   }
 
   /**

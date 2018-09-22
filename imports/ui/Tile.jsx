@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RoomsController from '../api/controllers/roomsController.js';
+import GameController from '../api/controllers/gameController.js';
 
 export default class BoardTile extends Component {
   tileContent() {
@@ -11,8 +11,7 @@ export default class BoardTile extends Component {
   }
 
   handleCellClick() {
-    console.log(this.props);
-    RoomsController.userMarkGame(this.props.game._id, this.props.row, this.props.col);
+    GameController.userMarkGame(this.props.game._id, this.props.row, this.props.col);
   }
 
   render() {

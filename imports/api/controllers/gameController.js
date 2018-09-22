@@ -1,7 +1,7 @@
 import { Game } from '../models/game.js';
 import Games from '../collections/games.js';
 
-const RoomsController = {
+const GameController = {
   newGame(user) {
     const game = new Game();
     game.userJoin(user);
@@ -33,4 +33,4 @@ const RoomsController = {
   },
 };
 
-export { RoomsController as default };
+export { GameController as default };

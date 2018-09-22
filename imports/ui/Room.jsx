@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RoomsController from '../api/controllers/roomsController.js';
+import GameController from '../api/controllers/gameController.js';
 import { GameStatuses } from '../api/models/game.js';
 import Tile from './Tile.jsx';
 
@@ -9,7 +9,7 @@ export default class Room extends Component {
   }
 
   handleConcede() {
-    RoomsController.userConcedeGame(this.props.game, this.props.user);
+    GameController.userConcedeGame(this.props.game, this.props.user);
   }
 
   _isGameFinished() {
@@ -112,7 +112,6 @@ export default class Room extends Component {
 }
 
 function Board(props) {
-  console.log(props);
   const rows = props.game.board.map((row, i) => <Row row={i} key={i} game={props.game} />);
   return (
     <table className="game-board">
