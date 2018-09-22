@@ -3,10 +3,11 @@ import RoomsController from '../api/controllers/roomsController.js';
 
 export default class BoardTile extends Component {
   tileContent() {
-    if (this.props.tile.length === 0) {
+    const tile = this.props.game.board[this.props.row][this.props.col];
+    if (tile.length === 0) {
       return '';
     }
-    return this.props.tile[0];
+    return tile[0];
   }
 
   handleCellClick() {

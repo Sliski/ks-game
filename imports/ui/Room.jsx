@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Board from './Board.jsx';
 import RoomsController from '../api/controllers/roomsController.js';
 import { GameStatuses } from '../api/models/game.js';
+import Tile from './Tile.jsx';
 
 export default class Room extends Component {
   handleBackToRoomsList() {
@@ -59,7 +59,7 @@ export default class Room extends Component {
           {this._isGameFinished() ? 'Leave room' : 'Concede'}
         </button>
         {this.renderStatus()}
-        <Board board={this.props.game.board} game={this.props.game} />
+        <Board game={this.props.game} />
       </div>
     );
     // // board size:
@@ -109,4 +109,21 @@ export default class Room extends Component {
     //   </div>
     // );
   }
+}
+
+function Board(props) {
+  console.log(props);
+  const rows = props.game.board.map((row, i) => <Row row={i} key={i} game={props.game} />);
+  return (
+    <table className="game-board">
+      <tbody>{rows}</tbody>
+    </table>
+  );
+}
+
+function Row(props) {
+  const tiles = props.game.board[props.row].map((tile, i) => (
+    <Tile row={props.row} col={i} key={i} game={props.game} />
+  ));
+  return <tr>{tiles}</tr>;
 }
