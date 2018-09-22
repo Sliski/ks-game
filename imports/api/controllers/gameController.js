@@ -22,19 +22,19 @@ const GameController = {
 
   userConcedeGame(gameId, user) {
     const game = Games.findOne(gameId);
-    game.userConcede(user);
+    game.userConcede();
     Games.saveGame(game);
   },
 
-  userMarkGame(gameId, row, col) {
+  userAddToken(gameId, row, col) {
     const game = Games.findOne(gameId);
-    game.userMark(row, col);
+    game.userAddToken(row, col);
     Games.saveGame(game);
   },
 
   userConfirm(gameId, user) {
     const game = Games.findOne(gameId);
-    game.userConfirm(user);
+    game.userConfirm();
     Games.saveGame(game);
   },
 };

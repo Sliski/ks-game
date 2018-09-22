@@ -16,7 +16,7 @@ export default class Room extends Component {
     GameController.userConfirm(this.props.game, this.props.user);
   }
 
-  _isGameFinished() {
+  _isConcedeEnable() {
     return (
       this.props.game.status === GameStatuses.FINISHED
       || this.props.game.userIndex(this.props.user) === null
@@ -48,18 +48,18 @@ export default class Room extends Component {
         <button
           type="button"
           onClick={
-            this._isGameFinished()
+            this._isConcedeEnable()
               ? this.handleBackToRoomsList.bind(this)
               : this.handleConcede.bind(this)
           }
         >
-          {this._isGameFinished() ? 'Leave room' : 'Concede'}
+          {this._isConcedeEnable() ? 'Leave room' : 'Concede'}
         </button>
         {this.renderStatus()}
         <Board game={this.props.game} />
         <button
           type="button"
-          disabled={this.props.game.confirmStatus(this.props.user)}
+          disabled={this.props.game.getUserConfirmStatus()}
           onClick={this.handleConfirm.bind(this)}
         >
           Confirm

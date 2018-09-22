@@ -6,7 +6,26 @@ table.game-board {
     width: 80px;
     height: 80px;
     font-size: 80px;
+    margin: 0px;
+    padding: 0px;
     text-align: center;
+  }
+
+  div {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    align: center;
+  }
+
+  .a {
+    background: red;
+  }
+
+  .b {
+    background: blue;
   }
 }
 

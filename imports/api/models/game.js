@@ -60,7 +60,7 @@ export class Game {
     if (this.status !== GameStatuses.WAITING) {
       throw new Error('cannot join at current state');
     }
-    if (this.userIndex(user) !== null) {
+    if (this.userIndex() !== null) {
       throw new Error('user already in game');
     }
 
@@ -84,7 +84,7 @@ export class Game {
     if (this.status !== GameStatuses.WAITING) {
       throw new Error('cannot leave at current state');
     }
-    if (this.userIndex(user) === null) {
+    if (this.userIndex() === null) {
       throw new Error('user not in game');
     }
     this.players = _.reject(this.players, player => player.userId === user._id);
@@ -100,18 +100,18 @@ export class Game {
    *
    * @param {User} user Meteor.user object
    */
-  userConcede(user) {
+  userConcede() {
     if (this.status !== GameStatuses.STARTED) {
       throw new Error('cannot concede at current state');
     }
-    if (this.userIndex(user) === null) {
+    if (this.userIndex() === null) {
       throw new Error('user not in game');
     }
     this.status = GameStatuses.FINISHED;
   }
 
-  userConfirm(user) {
-    const userIndex = this.userIndex(user);
+  userConfirm() {
+    const userIndex = this.userIndex();
     if (userIndex === null) {
       throw new Error('user not in game');
     }
@@ -139,8 +139,8 @@ export class Game {
     }
   }
 
-  confirmStatus(user) {
-    return this.confirms[this.userIndex(user)];
+  getUserConfirmStatus() {
+    return this.confirms[this.userIndex()];
   }
 
   /**
@@ -149,11 +149,11 @@ export class Game {
    * @param {Number} row Row index of the board
    * @param {Number} col Col index of the board
    */
-  userMark(row, col) {
+  userAddToken(row, col) {
     if (row < 0 || row >= this.board.length || col < 0 || col >= this.board[row].length) {
       throw new Error('invalid row|col input');
     }
-    this.board[row][col].push('aaa');
+    this.board[row][col].push(this.userIndex() === 0 ? 'a' : 'b');
   }
 
   /**
@@ -218,16 +218,22 @@ export class Game {
   /**
    * Helper method to retrieve the player index of a user
    *
-   * @param {User} user Meteor.user object
    * @return {Number} index 0-based index, or null if not found
    */
-  userIndex(user) {
+  userIndex() {
     for (let i = 0; i < this.players.length; i += 1) {
-      if (this.players[i].userId === user._id) {
+      if (this.players[i].userId === Meteor.userId()) {
         return i;
       }
     }
     return null;
+  }
+
+  opponentIndex() {
+    if (this.userIndex() === null) {
+      return null;
+    }
+    return Math.abs(this.userIndex() - 1);
   }
 
   _filledCount() {
