@@ -4,7 +4,7 @@ import { GameStatuses } from '../api/models/game.js';
 
 export default class Room extends Component {
   handleCellClick(row, col) {
-    const game = this.props.game;
+    const { game } = this.props;
     if (game.currentPlayerIndex() !== game.userIndex(this.props.user)) return;
     RoomsController.userMarkGame(game._id, this.props.user, row, col);
   }
@@ -32,7 +32,7 @@ export default class Room extends Component {
   }
 
   renderStatus() {
-    const game = this.props.game;
+    const { game } = this.props;
     let status = '';
     if (game.status === GameStatuses.STARTED) {
       const playerIndex = game.currentPlayerIndex();
