@@ -8,6 +8,8 @@ export const GameStatuses = {
   ABANDONED: 'ABANDONED', // all players left; game is abandoned
 };
 
+const BOARD_SIZE = 6;
+
 /**
  * Game model, encapsulating game-related logics
  * It is data store independent
@@ -27,7 +29,7 @@ export class Game {
       _.extend(this, gameDoc);
     } else {
       this.status = GameStatuses.WAITING;
-      this.board = [[null, null, null], [null, null, null], [null, null, null]];
+      this.board = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill([]));
       this.players = [];
     }
   }
@@ -103,31 +105,15 @@ export class Game {
   /**
    * Handle user action. i.e. putting marker on the game board
    *
-   * @param {User} user
    * @param {Number} row Row index of the board
    * @param {Number} col Col index of the board
    */
-  userMark(user, row, col) {
-    const playerIndex = this.userIndex(user);
-    const currentPlayerIndex = this.currentPlayerIndex();
-    if (currentPlayerIndex !== playerIndex) {
-      throw new Error('user cannot make move at current state');
-    }
+  userMark(row, col) {
     if (row < 0 || row >= this.board.length || col < 0 || col >= this.board[row].length) {
       throw new Error('invalid row|col input');
     }
-    if (this.board[row][col] !== null) {
-      throw new Error('spot is filled');
-    }
-    this.board[row][col] = playerIndex;
-
-    const winner = this.winner();
-    if (winner !== null) {
-      this.status = GameStatuses.FINISHED;
-    }
-    if (this._filledCount() === 9) {
-      this.status = GameStatuses.FINISHED;
-    }
+    this.board[row][col].push('aaa');
+    console.log(`User mark ${row}${col}`);
   }
 
   /**

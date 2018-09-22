@@ -26,9 +26,9 @@ const RoomsController = {
     Games.saveGame(game);
   },
 
-  userMarkGame(gameId, user, row, col) {
+  userMarkGame(gameId, row, col) {
     const game = Games.findOne(gameId);
-    game.userMark(user, row, col);
+    game.userMark(row, col);
     Games.saveGame(game);
   },
 };
