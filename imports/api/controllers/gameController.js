@@ -31,6 +31,12 @@ const GameController = {
     game.userMark(row, col);
     Games.saveGame(game);
   },
+
+  userConfirm(gameId, user) {
+    const game = Games.findOne(gameId);
+    game.userConfirm(user);
+    Games.saveGame(game);
+  },
 };
 
 export { GameController as default };

@@ -12,6 +12,10 @@ export default class Room extends Component {
     GameController.userConcedeGame(this.props.game, this.props.user);
   }
 
+  handleConfirm() {
+    GameController.userConfirm(this.props.game, this.props.user);
+  }
+
   _isGameFinished() {
     return (
       this.props.game.status === GameStatuses.FINISHED
@@ -19,14 +23,8 @@ export default class Room extends Component {
     );
   }
 
-  renderCell(row, col) {
-    const value = this.props.game.board[row][col];
-    if (value === 0) return <td>O</td>;
-    if (value === 1) return <td>X</td>;
-    return <td onClick={this.handleCellClick.bind(this, row, col)} />;
-  }
-
   renderStatus() {
+    console.log(this.props);
     const { game } = this.props;
     let status = '';
     if (game.status === GameStatuses.STARTED) {
@@ -46,7 +44,6 @@ export default class Room extends Component {
 
   render() {
     return (
-      // done
       <div>
         <button
           type="button"
@@ -60,54 +57,16 @@ export default class Room extends Component {
         </button>
         {this.renderStatus()}
         <Board game={this.props.game} />
+        <button
+          type="button"
+          disabled={this.props.game.confirmStatus(this.props.user)}
+          onClick={this.handleConfirm.bind(this)}
+        >
+          Confirm
+          {` ${this.props.game.step}`}
+        </button>
       </div>
     );
-    // // board size:
-    // const xSize = 6;
-    // const ySize = 6;
-    //
-    // let boardHtml = '';
-    //
-    // for (let x = 0; x < xSize; x += 1) {
-    //   for (let y = 0; y < ySize; y += 1) {
-    //     boardHtml += 'row';
-    //     console.log('xyz');
-    //   }
-    // }
-    // return (
-    //   <div>
-    //     <button
-    //       type="button"
-    //       onClick={
-    //         this._isGameFinished()
-    //           ? this.handleBackToRoomsList.bind(this)
-    //           : this.handleConcede.bind(this)
-    //       }
-    //     >
-    //       {this._isGameFinished() ? 'Leave room.' : 'Concede.'}
-    //     </button>
-    //     {this.renderStatus()}
-    //     <table className="game-board">
-    //       <tbody>
-    //         <tr>
-    //           {this.renderCell(0, 0)}
-    //           {this.renderCell(0, 1)}
-    //           {this.renderCell(0, 2)}
-    //         </tr>
-    //         <tr>
-    //           {this.renderCell(1, 0)}
-    //           {this.renderCell(1, 1)}
-    //           {this.renderCell(1, 2)}
-    //         </tr>
-    //         <tr>
-    //           {this.renderCell(2, 0)}
-    //           {this.renderCell(2, 1)}
-    //           {this.renderCell(2, 2)}
-    //         </tr>
-    //       </tbody>
-    //     </table>
-    //   </div>
-    // );
   }
 }
 

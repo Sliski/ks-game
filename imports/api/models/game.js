@@ -1,6 +1,4 @@
-/**
- * GameStatus constants
- */
+// status of the game
 export const GameStatuses = {
   WAITING: 'WAITING', // waiting player to join
   STARTED: 'STARTED', // all spots are filled; can start playing
@@ -8,6 +6,14 @@ export const GameStatuses = {
   ABANDONED: 'ABANDONED', // all players left; game is abandoned
 };
 
+// game steps
+export const GameSteps = {
+  SETUP: 'setup',
+  PLANNING: 'planning',
+  EXECUTION: 'execution',
+};
+
+// width and height of board
 const BOARD_SIZE = 6;
 
 /**
@@ -29,8 +35,10 @@ export class Game {
       _.extend(this, gameDoc);
     } else {
       this.status = GameStatuses.WAITING;
+      this.step = GameSteps.SETUP;
       this.board = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill([]));
       this.players = [];
+      this.confirms = Array(2).fill(false);
     }
   }
 
@@ -40,7 +48,7 @@ export class Game {
    * @return {[]String] List of fields required persistent storage
    */
   persistentFields() {
-    return ['status', 'board', 'players'];
+    return ['status', 'step', 'board', 'players', 'confirms'];
   }
 
   /**
@@ -100,6 +108,39 @@ export class Game {
       throw new Error('user not in game');
     }
     this.status = GameStatuses.FINISHED;
+  }
+
+  userConfirm(user) {
+    const userIndex = this.userIndex(user);
+    if (userIndex === null) {
+      throw new Error('user not in game');
+    }
+    if (this.confirms[userIndex]) {
+      throw new Error('Already confirmed.');
+    }
+    this.confirms[userIndex] = true;
+
+    // move 1 step forward if both players confirmed setup.
+    if (this.step === GameSteps.SETUP && this.confirms[0] && this.confirms[1]) {
+      this.confirms[0] = false;
+      this.confirms[1] = false;
+      this.step = GameSteps.PLANNING;
+    }
+
+    // move 1 step forward if both players confirmed planning.
+    if (this.step === GameSteps.PLANNING && this.confirms[0] && this.confirms[1]) {
+      // this.confirms[0] = true;
+      // this.confirms[1] = false;
+      // this.step = GameSteps.EXECUTION;
+      // for testing purposes:
+      this.confirms[0] = false;
+      this.confirms[1] = false;
+      this.step = GameSteps.SETUP;
+    }
+  }
+
+  confirmStatus(user) {
+    return this.confirms[this.userIndex(user)];
   }
 
   /**
