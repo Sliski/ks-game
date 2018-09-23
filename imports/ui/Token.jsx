@@ -4,6 +4,7 @@ import { ItemTypes } from '../api/Constants.js';
 
 const tokenSource = {
   beginDrag(props) {
+    console.log('Token.beingDrag props');
     console.log(props);
     return {
       x: props.x,
@@ -20,10 +21,6 @@ function collect(connect, monitor) {
 }
 
 class Token extends Component {
-  _empty() {
-    return '';
-  }
-
   render() {
     const { connectDragSource, isDragging } = this.props;
     return connectDragSource(
