@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
+import { DropTarget } from 'react-dnd';
+import { GameSteps, ItemTypes } from '../api/models/game.js';
 import GameController from '../api/controllers/gameController.js';
-import { GameSteps } from '../api/models/game.js';
 import Token from './Token.jsx';
 
-export default class Tile extends Component {
+const tileTarget = {
+  drop(props) {
+    console.log('TileSquare.drop');
+    console.log(props);
+  },
+};
+
+function collect(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+  };
+}
+
+class Tile extends Component {
   tileContent() {
     const tile = this.props.game.board[this.props.row][this.props.col];
     if (tile.length === 0) {
@@ -24,6 +39,10 @@ export default class Tile extends Component {
         </div>
       );
     }
-    return <div className="tile">{this.tileContent()}</div>;
+
+    const { connectDropTarget } = this.props;
+    return connectDropTarget(<div className="tile">{this.tileContent()}</div>);
   }
 }
+
+export default DropTarget(ItemTypes.TOKEN, tileTarget, collect)(Tile);

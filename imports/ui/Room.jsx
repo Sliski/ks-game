@@ -3,7 +3,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import GameController from '../api/controllers/gameController.js';
 import { GameStatuses } from '../api/models/game.js';
-import TileSquare from './TileSquare.jsx';
+import Tile from './Tile.jsx';
 
 class Room extends Component {
   handleBackToRoomsList() {
@@ -78,7 +78,7 @@ function Board(props) {
 
 function Row(props) {
   const tiles = props.game.board[props.row].map((tile, i) => (
-    <TileSquare row={props.row} col={i} key={i} game={props.game} />
+    <Tile row={props.row} col={i} key={i} game={props.game} />
   ));
   return <div className="row">{tiles}</div>;
 }
