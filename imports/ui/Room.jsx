@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import GameController from '../api/controllers/gameController.js';
 import { GameStatuses } from '../api/models/game.js';
 import Tile from './Tile.jsx';
 
-export default class Room extends Component {
+class Room extends Component {
   handleBackToRoomsList() {
     this.props.backToRoomsListHandler();
   }
@@ -84,3 +86,5 @@ function Row(props) {
   ));
   return <tr>{tiles}</tr>;
 }
+
+export default DragDropContext(HTML5Backend)(Room);
