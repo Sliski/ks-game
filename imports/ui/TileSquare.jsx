@@ -33,7 +33,12 @@ class TileSquare extends Component {
   }
 
   render() {
-    return <Tile row={this.props.row} col={this.props.col} game={this.props.game} />;
+    const { connectDropTarget } = this.props;
+    return connectDropTarget(
+      <div>
+        <Tile row={this.props.row} col={this.props.col} game={this.props.game} />
+      </div>,
+    );
   }
 }
 
