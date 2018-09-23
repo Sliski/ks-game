@@ -13,6 +13,11 @@ export const GameSteps = {
   EXECUTION: 'execution',
 };
 
+// Draggable item types
+export const ItemTypes = {
+  TOKEN: 'token',
+};
+
 // width and height of board
 const BOARD_SIZE = 6;
 

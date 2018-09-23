@@ -11,11 +11,11 @@ class Room extends Component {
   }
 
   handleConcede() {
-    GameController.userConcedeGame(this.props.game, this.props.user);
+    GameController.userConcedeGame(this.props.game);
   }
 
   handleConfirm() {
-    GameController.userConfirm(this.props.game, this.props.user);
+    GameController.userConfirm(this.props.game);
   }
 
   _isConcedeEnable() {
@@ -73,18 +73,14 @@ class Room extends Component {
 
 function Board(props) {
   const rows = props.game.board.map((row, i) => <Row row={i} key={i} game={props.game} />);
-  return (
-    <table className="game-board">
-      <tbody>{rows}</tbody>
-    </table>
-  );
+  return <div className="game-board">{rows}</div>;
 }
 
 function Row(props) {
   const tiles = props.game.board[props.row].map((tile, i) => (
     <TileSquare row={props.row} col={i} key={i} game={props.game} />
   ));
-  return <tr>{tiles}</tr>;
+  return <div className="row">{tiles}</div>;
 }
 
 export default DragDropContext(HTML5Backend)(Room);

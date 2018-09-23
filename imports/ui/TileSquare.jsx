@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
-import { ItemTypes } from '../api/Constants.js';
+import { ItemTypes } from '../api/models/game.js';
 import Tile from './Tile.jsx';
 
 const squareTarget = {

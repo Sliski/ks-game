@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
-import { ItemTypes } from '../api/Constants.js';
+import { ItemTypes } from '../api/models/game.js';
 
 const tokenSource = {
   beginDrag(props) {
@@ -31,7 +31,7 @@ class Token extends Component {
           fontWeight: 'bold',
           cursor: 'move',
         }}
-        className={this.props.type}
+        className={`token ${this.props.type}`}
       >
         &gt;
       </div>,

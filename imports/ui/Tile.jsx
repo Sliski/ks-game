@@ -18,8 +18,12 @@ export default class Tile extends Component {
 
   render() {
     if (this.props.game.step === GameSteps.SETUP) {
-      return <td onClick={this.handleCellClick.bind(this)}>{this.tileContent()}</td>;
+      return (
+        <div className="tile" onClick={this.handleCellClick.bind(this)}>
+          {this.tileContent()}
+        </div>
+      );
     }
-    return <td>{this.tileContent()}</td>;
+    return <div className="tile">{this.tileContent()}</div>;
   }
 }

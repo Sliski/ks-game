@@ -20,7 +20,7 @@ const GameController = {
     Games.saveGame(game);
   },
 
-  userConcedeGame(gameId, user) {
+  userConcedeGame(gameId) {
     const game = Games.findOne(gameId);
     game.userConcede();
     Games.saveGame(game);
@@ -32,7 +32,7 @@ const GameController = {
     Games.saveGame(game);
   },
 
-  userConfirm(gameId, user) {
+  userConfirm(gameId) {
     const game = Games.findOne(gameId);
     game.userConfirm();
     Games.saveGame(game);
