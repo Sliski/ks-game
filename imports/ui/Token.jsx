@@ -6,6 +6,6 @@ export default class Token extends Component {
   }
 
   render() {
-    return <div className={this.props.type} />;
+    return <div className={this.props.type}>&gt;</div>;
   }
 }

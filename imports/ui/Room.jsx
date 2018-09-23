@@ -24,7 +24,6 @@ export default class Room extends Component {
   }
 
   renderStatus() {
-    console.log(this.props);
     const { game } = this.props;
     let status = '';
     if (game.status === GameStatuses.STARTED) {
