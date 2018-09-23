@@ -29,13 +29,43 @@ export class Game {
       this.status = GameStatuses.WAITING;
       this.step = GameSteps.SETUP;
       this.board = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill([]));
+      this.tray = [];
       this.players = [];
       this.confirms = Array(2).fill(false);
+
+      // add initial tokens
+      for (let i = 0; i < 3; i += 1) {
+        this.tray.push({
+          player: 1,
+          type: 'a',
+          rotate: 0,
+        });
+        this.tray.push({
+          player: 2,
+          type: 'b',
+          rotate: 0,
+        });
+        this.tray.push({
+          player: 0,
+          type: 'mountain',
+          rotate: -1,
+        });
+        this.tray.push({
+          player: 0,
+          type: 'lake',
+          rotate: -1,
+        });
+        this.tray.push({
+          player: 0,
+          type: 'building',
+          rotate: -1,
+        });
+      }
     }
   }
 
   persistentFields() {
-    return ['status', 'step', 'board', 'players', 'confirms'];
+    return ['status', 'step', 'board', 'tray', 'players', 'confirms'];
   }
 
   userJoin(user) {

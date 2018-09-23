@@ -3,6 +3,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import GameController from '../api/controllers/gameController.js';
 import { GameStatuses } from '../api/models/game.js';
+import Tray from './Tray.jsx';
 import Tile from './Tile.jsx';
 
 class Room extends Component {
@@ -51,7 +52,10 @@ class Room extends Component {
           {this._isConcedeEnable() ? 'Leave room' : 'Concede'}
         </button>
         {this.renderStatus()}
-        <Board game={this.props.game} />
+        <div className="play-area">
+          <Board game={this.props.game} />
+          <Tray game={this.props.game} />
+        </div>
         <button
           type="button"
           disabled={this.props.game.getUserConfirmStatus()}

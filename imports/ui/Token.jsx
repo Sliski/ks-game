@@ -41,7 +41,7 @@ class Token extends Component {
         className={`token token-${data.type}${data.rotate === -1 ? '' : ` rotate-${data.rotate}`}`}
         onContextMenu={this.handleRightClick.bind(this)}
       >
-        &gt;
+        {data.type === 'a' || data.type === 'b' ? '>' : ''}
       </div>,
     );
   }
