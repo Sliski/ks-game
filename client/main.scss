@@ -20,13 +20,25 @@ div.game-board {
       vertical-align: middle;
       line-height: 78px;
     }
+
+    .rotate-1 {
+      transform: rotate(90deg);
+    }
+
+    .rotate-2 {
+      transform: rotate(180deg);
+    }
+
+    .rotate-3 {
+      transform: rotate(270deg);
+    }
   }
 
-  .a {
+  .token-a {
     background: red;
   }
 
-  .b {
+  .token-b {
     background: blue;
   }
 }

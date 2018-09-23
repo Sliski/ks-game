@@ -43,6 +43,12 @@ const GameController = {
     game.moveToken(from, to);
     Games.saveGame(game);
   },
+
+  rotateToken(gameId, x, y) {
+    const game = Games.findOne(gameId);
+    game.rotateToken(x, y);
+    Games.saveGame(game);
+  },
 };
 
 export { GameController as default };

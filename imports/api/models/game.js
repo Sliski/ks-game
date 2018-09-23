@@ -21,20 +21,7 @@ export const ItemTypes = {
 // width and height of board
 const BOARD_SIZE = 6;
 
-/**
- * Game model, encapsulating game-related logics
- * It is data store independent
- */
 export class Game {
-  /**
-   * Constructor accepting a single param gameDoc.
-   * gameDoc should contain the permanent fields of the game instance.
-   * Normally, the fields are saved into data store, and later get retrieved
-   *
-   * If gameDoc is not given, then we will instantiate a new object with default fields
-   *
-   * @param {Object} [gameDoc] Optional doc retrieved from Games collection
-   */
   constructor(gameDoc) {
     if (gameDoc) {
       _.extend(this, gameDoc);
@@ -47,20 +34,10 @@ export class Game {
     }
   }
 
-  /**
-   * Return a list of fields that are required for permanent storage
-   *
-   * @return {[]String] List of fields required persistent storage
-   */
   persistentFields() {
     return ['status', 'step', 'board', 'players', 'confirms'];
   }
 
-  /**
-   * Handle join game action
-   *
-   * @param {User} user Meteor.user object
-   */
   userJoin(user) {
     if (this.status !== GameStatuses.WAITING) {
       throw new Error('cannot join at current state');
@@ -80,11 +57,6 @@ export class Game {
     }
   }
 
-  /**
-   * Handle leave game action
-   *
-   * @param {User} user Meteor.user object
-   */
   userLeave(user) {
     if (this.status !== GameStatuses.WAITING) {
       throw new Error('cannot leave at current state');
@@ -100,11 +72,6 @@ export class Game {
     }
   }
 
-  /**
-   * Handle concede.
-   *
-   * @param {User} user Meteor.user object
-   */
   userConcede() {
     if (this.status !== GameStatuses.STARTED) {
       throw new Error('cannot concede at current state');
@@ -148,87 +115,34 @@ export class Game {
     return this.confirms[this.userIndex()];
   }
 
-  /**
-   * Handle user action. i.e. putting marker on the game board
-   *
-   * @param {Number} x Row index of the board
-   * @param {Number} y Col index of the board
-   */
   userAddToken(x, y) {
     if (x < 0 || x >= this.board.length || y < 0 || y >= this.board[x].length) {
       throw new Error('invalid x|y input');
     }
-    this.board[x][y].push(this.userIndex() === 0 ? 'a' : 'b');
-  }
-
-  /**
-   * @return {Number} currentPlayerIndex 0 or 1
-   */
-  currentPlayerIndex() {
-    if (this.status !== GameStatuses.STARTED) {
-      return null;
-    }
-
-    // determine the current player by counting the filled cells
-    // if even, then it's first player, otherwise it's second player
-    const filledCount = this._filledCount();
-    return filledCount % 2 === 0 ? 0 : 1;
-  }
-
-  /**
-   * Determine the winner of the game
-   *
-   * @return {Number} playerIndex of the winner (0 or 1). null if not finished
-   */
-  winner() {
-    const { board } = this;
-    for (let playerIndex = 0; playerIndex < 2; playerIndex += 1) {
-      // check rows
-      for (let r = 0; r < 3; r += 1) {
-        let allMarked = true;
-        for (let c = 0; c < 3; c += 1) {
-          if (board[r][c] !== playerIndex) allMarked = false;
+    this.board[x][y].push(
+      this.userIndex() === 0
+        ? {
+          player: 0,
+          type: 'a',
+          rotate: -1,
         }
-        if (allMarked) return playerIndex;
-      }
-
-      // check cols
-      for (let c = 0; c < 3; c += 1) {
-        let allMarked = true;
-        for (let r = 0; r < 3; r += 1) {
-          if (board[r][c] !== playerIndex) allMarked = false;
-        }
-        if (allMarked) return playerIndex;
-      }
-
-      // check diagonals
-      if (
-        board[0][0] === playerIndex
-        && board[1][1] === playerIndex
-        && board[2][2] === playerIndex
-      ) {
-        return playerIndex;
-      }
-      if (
-        board[0][2] === playerIndex
-        && board[1][1] === playerIndex
-        && board[2][0] === playerIndex
-      ) {
-        return playerIndex;
-      }
-    }
-    return null;
+        : {
+          player: 1,
+          type: 'b',
+          rotate: 0,
+        },
+    );
   }
 
   moveToken(from, to) {
     this.board[to.x][to.y].push(this.board[from.x][from.y].pop());
   }
 
-  /**
-   * Helper method to retrieve the player index of a user
-   *
-   * @return {Number} index 0-based index, or null if not found
-   */
+  rotateToken(x, y) {
+    this.board[x][y][this.board[x][y].length - 1].rotate += 1;
+    this.board[x][y][this.board[x][y].length - 1].rotate %= 4;
+  }
+
   userIndex() {
     for (let i = 0; i < this.players.length; i += 1) {
       if (this.players[i].userId === Meteor.userId()) {
@@ -243,15 +157,5 @@ export class Game {
       return null;
     }
     return Math.abs(this.userIndex() - 1);
-  }
-
-  _filledCount() {
-    let filledCount = 0;
-    for (let r = 0; r < 3; r += 1) {
-      for (let c = 0; c < 3; c += 1) {
-        if (this.board[r][c] !== null) filledCount += 1;
-      }
-    }
-    return filledCount;
   }
 }

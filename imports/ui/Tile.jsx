@@ -23,7 +23,14 @@ class Tile extends Component {
     if (tile.length === 0) {
       return '';
     }
-    return <Token type={tile[tile.length - 1]} x={this.props.x} y={this.props.y} />;
+    return (
+      <Token
+        data={tile[tile.length - 1]}
+        x={this.props.x}
+        y={this.props.y}
+        gameId={this.props.game._id}
+      />
+    );
   }
 
   handleCellClick() {

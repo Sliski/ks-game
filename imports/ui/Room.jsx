@@ -29,15 +29,9 @@ class Room extends Component {
     const { game } = this.props;
     let status = '';
     if (game.status === GameStatuses.STARTED) {
-      const playerIndex = game.currentPlayerIndex();
-      status = `In Progress: current player: ${game.players[playerIndex].username}`;
+      status = 'In Progress.';
     } else if (game.status === GameStatuses.FINISHED) {
-      const playerIndex = game.winner();
-      if (playerIndex === null) {
-        status = 'Finished: tie';
-      } else {
-        status = `Finished: winner: ${game.players[playerIndex].username}`;
-      }
+      status = 'Finished.';
     }
 
     return <div>{status}</div>;

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
 import { ItemTypes } from '../api/models/game.js';
+import GameController from '../api/controllers/gameController.js';
 
 const tokenSource = {
   beginDrag(props) {
-    console.log('Token.beingDrag props');
-    console.log(props);
     return {
       x: props.x,
       y: props.y,
@@ -21,8 +20,16 @@ function collect(connect, monitor) {
 }
 
 class Token extends Component {
+  handleRightClick(e) {
+    e.preventDefault();
+    const { rotate } = this.props.data;
+    if (rotate !== -1) {
+      GameController.rotateToken(this.props.gameId, this.props.x, this.props.y);
+    }
+  }
+
   render() {
-    const { connectDragSource, isDragging } = this.props;
+    const { connectDragSource, isDragging, data } = this.props;
     return connectDragSource(
       <div
         style={{
@@ -31,7 +38,8 @@ class Token extends Component {
           fontWeight: 'bold',
           cursor: 'move',
         }}
-        className={`token ${this.props.type}`}
+        className={`token token-${data.type}${data.rotate === -1 ? '' : ` rotate-${data.rotate}`}`}
+        onContextMenu={this.handleRightClick.bind(this)}
       >
         &gt;
       </div>,
