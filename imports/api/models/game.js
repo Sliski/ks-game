@@ -151,14 +151,14 @@ export class Game {
   /**
    * Handle user action. i.e. putting marker on the game board
    *
-   * @param {Number} row Row index of the board
-   * @param {Number} col Col index of the board
+   * @param {Number} x Row index of the board
+   * @param {Number} y Col index of the board
    */
-  userAddToken(row, col) {
-    if (row < 0 || row >= this.board.length || col < 0 || col >= this.board[row].length) {
-      throw new Error('invalid row|col input');
+  userAddToken(x, y) {
+    if (x < 0 || x >= this.board.length || y < 0 || y >= this.board[x].length) {
+      throw new Error('invalid x|y input');
     }
-    this.board[row][col].push(this.userIndex() === 0 ? 'a' : 'b');
+    this.board[x][y].push(this.userIndex() === 0 ? 'a' : 'b');
   }
 
   /**
@@ -218,6 +218,10 @@ export class Game {
       }
     }
     return null;
+  }
+
+  moveToken(from, to) {
+    this.board[to.x][to.y].push(this.board[from.x][from.y].pop());
   }
 
   /**

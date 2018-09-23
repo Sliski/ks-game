@@ -72,13 +72,13 @@ class Room extends Component {
 }
 
 function Board(props) {
-  const rows = props.game.board.map((row, i) => <Row row={i} key={i} game={props.game} />);
+  const rows = props.game.board.map((row, i) => <Row x={i} key={i} game={props.game} />);
   return <div className="game-board">{rows}</div>;
 }
 
 function Row(props) {
-  const tiles = props.game.board[props.row].map((tile, i) => (
-    <Tile row={props.row} col={i} key={i} game={props.game} />
+  const tiles = props.game.board[props.x].map((tile, i) => (
+    <Tile x={props.x} y={i} key={i} game={props.game} />
   ));
   return <div className="row">{tiles}</div>;
 }

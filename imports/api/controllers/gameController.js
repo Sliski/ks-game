@@ -26,15 +26,21 @@ const GameController = {
     Games.saveGame(game);
   },
 
-  userAddToken(gameId, row, col) {
+  userAddToken(gameId, x, y) {
     const game = Games.findOne(gameId);
-    game.userAddToken(row, col);
+    game.userAddToken(x, y);
     Games.saveGame(game);
   },
 
   userConfirm(gameId) {
     const game = Games.findOne(gameId);
     game.userConfirm();
+    Games.saveGame(game);
+  },
+
+  moveToken(gameId, from, to) {
+    const game = Games.findOne(gameId);
+    game.moveToken(from, to);
     Games.saveGame(game);
   },
 };
