@@ -22,7 +22,7 @@ class Tray extends Component {
   tokensInTray() {
     console.log(this.props.game.tray);
     return this.props.game.tray.map((token, i) => (
-      <Token data={token} x="-1" y="-1" key={i} gameId={this.props.game._id} />
+      <Token data={token} x={-1} y={-1} key={i} gameId={this.props.game._id} />
     ));
   }
 

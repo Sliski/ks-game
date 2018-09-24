@@ -8,19 +8,19 @@ div.play-area {
 
   div.tray {
     height: 480px;
-    width: 240px;
+    width: 160px;
     margin: 10px;
     float: left;
     border: 1px solid black;
   }
 
   .token {
-    border: 1px solid black;
-    width: 76px;
-    height: 76px;
+    border: none;
+    width: 78px;
+    height: 78px;
     text-align: center;
     vertical-align: middle;
-    line-height: 76px;
+    line-height: 78px;
     float: left;
   }
 
@@ -34,14 +34,6 @@ div.play-area {
 
   .rotate-3 {
     transform: rotate(270deg);
-  }
-
-  .token-a {
-    background: red;
-  }
-
-  .token-b {
-    background: green;
   }
 
   .token-mountain {

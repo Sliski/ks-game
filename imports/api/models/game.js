@@ -34,33 +34,51 @@ export class Game {
       this.confirms = Array(2).fill(false);
 
       // add initial tokens
-      for (let i = 0; i < 3; i += 1) {
-        this.tray.push({
-          player: 1,
-          type: 'a',
-          rotate: 0,
-        });
-        this.tray.push({
-          player: 2,
-          type: 'b',
-          rotate: 0,
-        });
-        this.tray.push({
-          player: 0,
-          type: 'mountain',
-          rotate: -1,
-        });
-        this.tray.push({
-          player: 0,
-          type: 'lake',
-          rotate: -1,
-        });
-        this.tray.push({
-          player: 0,
-          type: 'building',
-          rotate: -1,
-        });
-      }
+      this.tray.push({
+        player: 0,
+        type: 'pl',
+        rotate: 0,
+      });
+      this.tray.push({
+        player: 0,
+        type: 'cb',
+        rotate: 0,
+      });
+      this.tray.push({
+        player: 0,
+        type: 'rd',
+        rotate: 0,
+      });
+      this.tray.push({
+        player: 1,
+        type: 'lv',
+        rotate: 0,
+      });
+      this.tray.push({
+        player: 1,
+        type: 'st',
+        rotate: 0,
+      });
+      this.tray.push({
+        player: 1,
+        type: 'bh',
+        rotate: 0,
+      });
+      this.tray.push({
+        player: -1,
+        type: 'mountain',
+        rotate: -1,
+      });
+      this.tray.push({
+        player: 0,
+        type: 'lake',
+        rotate: -1,
+      });
+      this.tray.push({
+        player: 0,
+        type: 'building',
+        rotate: -1,
+      });
     }
   }
 
