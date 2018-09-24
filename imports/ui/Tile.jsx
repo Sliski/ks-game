@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
-import { GameSteps, ItemTypes } from '../api/models/game.js';
+import { ItemTypes } from '../api/models/game.js';
 import GameController from '../api/controllers/gameController.js';
 import Token from './Token.jsx';
 
 const tileTarget = {
   drop(props, monitor) {
-    GameController.moveToken(props.game._id, monitor.getItem(), { x: props.x, y: props.y });
+    const item = monitor.getItem();
+    if (item.x !== -1 && item.y !== -1) {
+      GameController.moveToken(props.game._id, item, { x: props.x, y: props.y });
+    } else {
+      GameController.addToken(props.game._id, item.data, props.x, props.y);
+    }
   },
 };
 
@@ -33,20 +38,10 @@ class Tile extends Component {
     );
   }
 
-  handleCellClick() {
-    if (this.props.game.step === GameSteps.SETUP) {
-      GameController.userAddToken(this.props.game._id, this.props.x, this.props.y);
-    }
-  }
-
   render() {
     const { connectDropTarget } = this.props;
 
-    return connectDropTarget(
-      <div className="tile" onClick={this.handleCellClick.bind(this)}>
-        {this.tileContent()}
-      </div>,
-    );
+    return connectDropTarget(<div className="tile">{this.tileContent()}</div>);
   }
 }
 

@@ -26,12 +26,6 @@ const GameController = {
     Games.saveGame(game);
   },
 
-  userAddToken(gameId, x, y) {
-    const game = Games.findOne(gameId);
-    game.userAddToken(x, y);
-    Games.saveGame(game);
-  },
-
   userConfirm(gameId) {
     const game = Games.findOne(gameId);
     game.userConfirm();
@@ -47,6 +41,18 @@ const GameController = {
   rotateToken(gameId, x, y) {
     const game = Games.findOne(gameId);
     game.rotateToken(x, y);
+    Games.saveGame(game);
+  },
+
+  addToken(gameId, token, x, y) {
+    const game = Games.findOne(gameId);
+    game.addToken(token, x, y);
+    Games.saveGame(game);
+  },
+
+  removeToken(gameId, x, y) {
+    const game = Games.findOne(gameId);
+    game.removeToken(x, y);
     Games.saveGame(game);
   },
 };

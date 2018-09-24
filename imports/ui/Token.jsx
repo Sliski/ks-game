@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
 import { ItemTypes } from '../api/models/game.js';
 import GameController from '../api/controllers/gameController.js';
-import {
-  lv, bh, st, pl, cb, rd,
-} from '../icons/tokens.jsx';
+import { icons } from '../icons/tokens.jsx';
 
 const tokenSource = {
   beginDrag(props) {
+    console.log(props);
     return {
       x: props.x,
       y: props.y,
+      data: props.data,
     };
   },
 };
@@ -24,23 +24,7 @@ function collect(connect, monitor) {
 
 class Token extends Component {
   getIcon(data) {
-    const { type } = data;
-    switch (type) {
-      case 'lv':
-        return lv;
-      case 'bh':
-        return bh;
-      case 'st':
-        return st;
-      case 'pl':
-        return pl;
-      case 'cb':
-        return cb;
-      case 'rd':
-        return rd;
-      default:
-        return '';
-    }
+    return icons[data.type];
   }
 
   handleRightClick(e) {

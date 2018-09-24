@@ -163,25 +163,6 @@ export class Game {
     return this.confirms[this.userIndex()];
   }
 
-  userAddToken(x, y) {
-    if (x < 0 || x >= this.board.length || y < 0 || y >= this.board[x].length) {
-      throw new Error('invalid x|y input');
-    }
-    this.board[x][y].push(
-      this.userIndex() === 0
-        ? {
-          player: 0,
-          type: 'a',
-          rotate: -1,
-        }
-        : {
-          player: 1,
-          type: 'b',
-          rotate: 0,
-        },
-    );
-  }
-
   moveToken(from, to) {
     this.board[to.x][to.y].push(this.board[from.x][from.y].pop());
   }
@@ -189,6 +170,17 @@ export class Game {
   rotateToken(x, y) {
     this.board[x][y][this.board[x][y].length - 1].rotate += 1;
     this.board[x][y][this.board[x][y].length - 1].rotate %= 4;
+  }
+
+  addToken(token, x, y) {
+    if (x < 0 || x >= this.board.length || y < 0 || y >= this.board[x].length) {
+      throw new Error('invalid x|y input');
+    }
+    this.board[x][y].push(token);
+  }
+
+  removeToken(x, y) {
+    return this.board[x][y].pop();
   }
 
   userIndex() {
