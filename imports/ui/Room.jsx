@@ -5,6 +5,9 @@ import GameController from '../api/controllers/gameController.js';
 import { GameStatuses } from '../api/models/game.js';
 import Tray from './Tray.jsx';
 import Tile from './Tile.jsx';
+import UnitStatCard from './UnitStatCard.jsx';
+import Hand from './Hand.jsx';
+import Discard from './Discard.jsx';
 
 class Room extends Component {
   handleBackToRoomsList() {
@@ -23,6 +26,16 @@ class Room extends Component {
     return (
       this.props.game.status === GameStatuses.FINISHED
       || this.props.game.userIndex(this.props.user) === null
+    );
+  }
+
+  renderTeamBox(player) {
+    return (
+      <div className={`team-box player-${player}`}>
+        <UnitStatCard />
+        <UnitStatCard />
+        <UnitStatCard />
+      </div>
     );
   }
 
@@ -53,8 +66,19 @@ class Room extends Component {
         </button>
         {this.renderStatus()}
         <div className="play-area">
-          <Board game={this.props.game} />
-          <Tray game={this.props.game} />
+          <div className="top-bottom-box">
+            {this.renderTeamBox(1)}
+            <Discard />
+          </div>
+          <div className="center-box">
+            <Tray game={this.props.game} />
+            <Board game={this.props.game} />
+            <Hand />
+          </div>
+          <div className="top-bottom-box">
+            {this.renderTeamBox(0)}
+            <Discard />
+          </div>
         </div>
         <button
           type="button"
