@@ -22,7 +22,7 @@ class Room extends Component {
     GameController.userConfirm(this.props.game);
   }
 
-  _isConcedeEnable() {
+  _isConcedeDisabled() {
     return (
       this.props.game.status === GameStatuses.FINISHED
       || this.props.game.userIndex(this.props.user) === null
@@ -30,11 +30,14 @@ class Room extends Component {
   }
 
   renderTeamBox(player) {
+    const { game } = this.props;
+    const playerIndex = game.playerIndex(player);
+    const units = game.units[playerIndex];
     return (
-      <div className={`team-box player-${player}`}>
-        <UnitStatCard />
-        <UnitStatCard />
-        <UnitStatCard />
+      <div className={`team-box player-${playerIndex}`}>
+        <UnitStatCard unit={units[0]} unitIndex={0} playerIndex={playerIndex} gameId={game._id} />
+        <UnitStatCard unit={units[1]} unitIndex={1} playerIndex={playerIndex} gameId={game._id} />
+        <UnitStatCard unit={units[2]} unitIndex={2} playerIndex={playerIndex} gameId={game._id} />
       </div>
     );
   }
@@ -57,17 +60,17 @@ class Room extends Component {
         <button
           type="button"
           onClick={
-            this._isConcedeEnable()
+            this._isConcedeDisabled()
               ? this.handleBackToRoomsList.bind(this)
               : this.handleConcede.bind(this)
           }
         >
-          {this._isConcedeEnable() ? 'Leave room' : 'Concede'}
+          {this._isConcedeDisabled() ? 'Leave room' : 'Concede'}
         </button>
         {this.renderStatus()}
         <div className="play-area">
           <div className="top-bottom-box">
-            {this.renderTeamBox(1)}
+            {this.renderTeamBox('opponent')}
             <Discard />
           </div>
           <div className="center-box">
@@ -76,7 +79,7 @@ class Room extends Component {
             <Hand />
           </div>
           <div className="top-bottom-box">
-            {this.renderTeamBox(0)}
+            {this.renderTeamBox('user')}
             <Discard />
           </div>
         </div>

@@ -31,6 +31,7 @@ export class Game {
       this.board = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill([]));
       this.tray = [];
       this.players = [];
+      this.units = [[], []];
       this.confirms = Array(2).fill(false);
 
       // add initial tokens
@@ -79,11 +80,37 @@ export class Game {
         type: 'building',
         rotate: -1,
       });
+
+      // add units
+      this.units[0].push({
+        type: 'pl',
+        hp: 4,
+      });
+      this.units[0].push({
+        type: 'cb',
+        hp: 3,
+      });
+      this.units[0].push({
+        type: 'rd',
+        hp: 2,
+      });
+      this.units[1].push({
+        type: 'lv',
+        hp: 4,
+      });
+      this.units[1].push({
+        type: 'st',
+        hp: 3,
+      });
+      this.units[1].push({
+        type: 'bh',
+        hp: 2,
+      });
     }
   }
 
   persistentFields() {
-    return ['status', 'step', 'board', 'tray', 'players', 'confirms'];
+    return ['status', 'step', 'board', 'tray', 'players', 'units', 'confirms'];
   }
 
   userJoin(user) {
@@ -183,6 +210,10 @@ export class Game {
     return this.board[x][y].pop();
   }
 
+  updateHp(playerIndex, unitIndex, amount) {
+    this.units[playerIndex][unitIndex].hp += amount;
+  }
+
   userIndex() {
     for (let i = 0; i < this.players.length; i += 1) {
       if (this.players[i].userId === Meteor.userId()) {
@@ -197,5 +228,12 @@ export class Game {
       return null;
     }
     return Math.abs(this.userIndex() - 1);
+  }
+
+  playerIndex(player) {
+    if (this.userIndex() === null) {
+      return player === 'user' ? 0 : 1;
+    }
+    return player === 'user' ? this.userIndex() : this.opponentIndex();
   }
 }

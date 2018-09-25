@@ -6,7 +6,6 @@ import { icons } from '../icons/tokens.jsx';
 
 const tokenSource = {
   beginDrag(props) {
-    console.log(props);
     return {
       x: props.x,
       y: props.y,

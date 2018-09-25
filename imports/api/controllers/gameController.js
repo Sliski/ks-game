@@ -55,6 +55,12 @@ const GameController = {
     game.removeToken(x, y);
     Games.saveGame(game);
   },
+
+  updateHp(gameId, playerIndex, unitIndex, amount) {
+    const game = Games.findOne(gameId);
+    game.updateHp(playerIndex, unitIndex, amount);
+    Games.saveGame(game);
+  },
 };
 
 export { GameController as default };
