@@ -212,6 +212,7 @@ export class Game {
 
   updateHp(playerIndex, unitIndex, amount) {
     this.units[playerIndex][unitIndex].hp += amount;
+    if (this.units[playerIndex][unitIndex].hp < 0) this.units[playerIndex][unitIndex].hp = 0;
   }
 
   userIndex() {
