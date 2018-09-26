@@ -2,16 +2,34 @@ div.play-area {
   width: 100%;
   height: 690px;
 
-  polygon.token-bg-1 {
+  .token-bg-1 {
     fill: #ff2d2d;
   }
 
-  polygon.token-bg-2 {
+  .token-bg-2 {
     fill: #08e069;
   }
 
   div {
     border: none;
+  }
+
+  .card {
+    margin: 1px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: white;
+    color: black;
+  }
+
+  .card-flipped {
+    background-color: black;
+    color: white;
   }
 
   .token {
@@ -101,10 +119,10 @@ div.play-area {
     }
 
     div.discard {
-      width: 100px;
-      height: 80px;
+      width: 80px;
+      height: 84px;
       margin: 10px;
-      border: 2px solid black;
+      background: grey;
       float: left;
     }
   }
@@ -145,10 +163,9 @@ div.play-area {
     }
 
     div.hand {
-      width: 100px;
+      width: 80px;
       height: 400px;
       margin: 10px;
-      border: 1px solid black;
       float: left;
     }
   }

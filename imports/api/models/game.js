@@ -16,6 +16,7 @@ export const GameSteps = {
 // Draggable item types
 export const ItemTypes = {
   TOKEN: 'token',
+  CARD: 'card',
 };
 
 // width and height of board
@@ -32,6 +33,24 @@ export class Game {
       this.tray = [];
       this.players = [];
       this.units = [[], []];
+      this.hands = Array(2).fill({
+        a: 2,
+        b: 2,
+        m: 2,
+        r: 2,
+      });
+      this.discards = Array(2).fill({
+        a: 0,
+        b: 0,
+        m: 0,
+        r: 0,
+      });
+      this.orders = Array(2).fill(
+        Array(3).fill({
+          type: null,
+          flipped: true,
+        }),
+      );
       this.confirms = Array(2).fill(false);
 
       // add initial tokens
@@ -88,11 +107,11 @@ export class Game {
       });
       this.units[0].push({
         type: 'cb',
-        hp: 3,
+        hp: 4,
       });
       this.units[0].push({
         type: 'rd',
-        hp: 2,
+        hp: 4,
       });
       this.units[1].push({
         type: 'lv',
@@ -100,17 +119,28 @@ export class Game {
       });
       this.units[1].push({
         type: 'st',
-        hp: 3,
+        hp: 4,
       });
       this.units[1].push({
         type: 'bh',
-        hp: 2,
+        hp: 4,
       });
     }
   }
 
   persistentFields() {
-    return ['status', 'step', 'board', 'tray', 'players', 'units', 'confirms'];
+    return [
+      'status',
+      'step',
+      'board',
+      'tray',
+      'players',
+      'units',
+      'hands',
+      'discards',
+      'orders',
+      'confirms',
+    ];
   }
 
   userJoin(user) {

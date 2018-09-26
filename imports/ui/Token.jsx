@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
 import { ItemTypes } from '../api/models/game.js';
 import GameController from '../api/controllers/gameController.js';
-import { icons } from '../icons/tokens.jsx';
+import { tokens } from '../icons/tokens.jsx';
 
 const tokenSource = {
   beginDrag(props) {
@@ -23,7 +23,7 @@ function collect(connect, monitor) {
 
 class Token extends Component {
   getIcon(data) {
-    return icons[data.type];
+    return tokens[data.type];
   }
 
   handleRightClick(e) {

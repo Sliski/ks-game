@@ -22,7 +22,7 @@ export default class UnitStatCard extends Component {
 
   render() {
     return (
-      <div className="unit-stat-card">
+      <div className={`unit-stat-card unit-${this.props.unit.type}`}>
         <div className="unit-img">{icons[this.props.unit.type]}</div>
         <div className="hp-bar">
           <button
