@@ -61,6 +61,18 @@ const GameController = {
     game.updateHp(playerIndex, unitIndex, amount);
     Games.saveGame(game);
   },
+
+  userUpdateOrder(gameId, unitIndex, orderType) {
+    const game = Games.findOne(gameId);
+    game.userUpdateOrder(unitIndex, orderType);
+    Games.saveGame(game);
+  },
+
+  userFlipOrder(gameId, unitIndex) {
+    const game = Games.findOne(gameId);
+    game.userFlipOrder(unitIndex);
+    Games.saveGame(game);
+  },
 };
 
 export { GameController as default };

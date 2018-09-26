@@ -45,12 +45,6 @@ export class Game {
         m: 0,
         r: 0,
       });
-      this.orders = Array(2).fill(
-        Array(3).fill({
-          type: null,
-          flipped: true,
-        }),
-      );
       this.confirms = Array(2).fill(false);
 
       // add initial tokens
@@ -90,12 +84,12 @@ export class Game {
         rotate: -1,
       });
       this.tray.push({
-        player: 0,
+        player: -1,
         type: 'lake',
         rotate: -1,
       });
       this.tray.push({
-        player: 0,
+        player: -1,
         type: 'building',
         rotate: -1,
       });
@@ -104,43 +98,56 @@ export class Game {
       this.units[0].push({
         type: 'pl',
         hp: 4,
+        order: {
+          type: null,
+          flipped: true,
+        },
       });
       this.units[0].push({
         type: 'cb',
         hp: 4,
+        order: {
+          type: null,
+          flipped: true,
+        },
       });
       this.units[0].push({
         type: 'rd',
         hp: 4,
+        order: {
+          type: null,
+          flipped: true,
+        },
       });
       this.units[1].push({
         type: 'lv',
         hp: 4,
+        order: {
+          type: null,
+          flipped: true,
+        },
       });
       this.units[1].push({
         type: 'st',
         hp: 4,
+        order: {
+          type: null,
+          flipped: true,
+        },
       });
       this.units[1].push({
         type: 'bh',
         hp: 4,
+        order: {
+          type: null,
+          flipped: true,
+        },
       });
     }
   }
 
   persistentFields() {
-    return [
-      'status',
-      'step',
-      'board',
-      'tray',
-      'players',
-      'units',
-      'hands',
-      'discards',
-      'orders',
-      'confirms',
-    ];
+    return ['status', 'step', 'board', 'tray', 'players', 'units', 'hands', 'discards', 'confirms'];
   }
 
   userJoin(user) {
@@ -243,6 +250,23 @@ export class Game {
   updateHp(playerIndex, unitIndex, amount) {
     this.units[playerIndex][unitIndex].hp += amount;
     if (this.units[playerIndex][unitIndex].hp < 0) this.units[playerIndex][unitIndex].hp = 0;
+  }
+
+  userUpdateOrder(unitIndex, orderType) {
+    const { order } = this.units[this.userIndex()][unitIndex];
+    const hand = this.hands[this.userIndex()];
+    if (order.type) {
+      hand[order.type] += 1;
+      hand[orderType] -= 1;
+      order.type = orderType;
+    } else {
+      hand[orderType] -= 1;
+      order.type = orderType;
+    }
+  }
+
+  userFlipOrder(unitIndex) {
+    this.units[this.userIndex()][unitIndex].order.flipped = false;
   }
 
   userIndex() {

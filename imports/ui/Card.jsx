@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
 import { ItemTypes } from '../api/models/game.js';
 
-const cardTypes = {
+export const cardTypes = {
   a: 'Attack A',
   b: 'Attack B',
   r: 'Rotate',
@@ -25,21 +25,23 @@ function collect(connect, monitor) {
 }
 
 class Card extends Component {
-  _empty() {
-    return '';
+  getCardText() {
+    return cardTypes[this.props.type];
   }
 
   render() {
-    const { connectDragSource, isDragging, type } = this.props;
+    const {
+      connectDragSource, isDragging, type, flipped,
+    } = this.props;
     return connectDragSource(
       <div
         style={{
           opacity: isDragging ? 0.5 : 1,
           cursor: 'move',
         }}
-        className={`card card-${type}`}
+        className={`card card-${type} card-${flipped ? 'flipped' : 'revealed'}`}
       >
-        {cardTypes[type]}
+        {this.getCardText()}
       </div>,
     );
   }

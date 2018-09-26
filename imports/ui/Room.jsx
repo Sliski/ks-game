@@ -32,12 +32,11 @@ class Room extends Component {
   renderTeamBox(player) {
     const { game } = this.props;
     const playerIndex = game.playerIndex(player);
-    const units = game.units[playerIndex];
     return (
       <div className={`team-box player-${playerIndex}`}>
-        <UnitStatCard unit={units[0]} unitIndex={0} playerIndex={playerIndex} gameId={game._id} />
-        <UnitStatCard unit={units[1]} unitIndex={1} playerIndex={playerIndex} gameId={game._id} />
-        <UnitStatCard unit={units[2]} unitIndex={2} playerIndex={playerIndex} gameId={game._id} />
+        <UnitStatCard unitIndex={0} playerIndex={playerIndex} game={game} />
+        <UnitStatCard unitIndex={1} playerIndex={playerIndex} game={game} />
+        <UnitStatCard unitIndex={2} playerIndex={playerIndex} game={game} />
       </div>
     );
   }

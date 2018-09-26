@@ -40,7 +40,6 @@ class Tile extends Component {
 
   render() {
     const { connectDropTarget } = this.props;
-
     return connectDropTarget(<div className="tile">{this.tileContent()}</div>);
   }
 }
