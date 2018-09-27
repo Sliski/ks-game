@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
-import { ItemTypes } from '../api/models/game.js';
+import { ItemTypes, GameSteps } from '../api/models/game.js';
 import { icons } from '../icons/tokens.jsx';
 import GameController from '../api/controllers/gameController.js';
 import Order from './Order.jsx';
@@ -12,7 +12,7 @@ const unitStatCardTarget = {
   },
 
   canDrop(props) {
-    return props.game.userIndex() === props.playerIndex;
+    return props.game.userIndex() === props.playerIndex && props.game.step === GameSteps.PLANNING;
   },
 };
 

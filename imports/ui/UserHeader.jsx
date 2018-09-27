@@ -14,7 +14,7 @@ export default class UserHeader extends Component {
           <div>
             <div>
               Logged as
-              {this.props.user.username}
+              {` ${this.props.user.username}`}
             </div>
             <input type="button" onClick={this.handleLogout.bind(this)} value="Logout" />
           </div>
