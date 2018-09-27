@@ -75,12 +75,12 @@ class Room extends Component {
           <div className="center-box">
             <Tray game={this.props.game} />
             <Board game={this.props.game} />
-            <Hand game={this.props.game} />
           </div>
           <div className="top-bottom-box">
             {this.renderTeamBox('user')}
             <Discard playerIndex={this.props.game.playerIndex('user')} game={this.props.game} />
           </div>
+          <Hand game={this.props.game} />
         </div>
         <button
           type="button"

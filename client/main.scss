@@ -1,6 +1,6 @@
 div.play-area {
   width: 100%;
-  height: 690px;
+  height: 720px;
 
   .token-bg-1 {
     fill: #ff2d2d;
@@ -176,11 +176,14 @@ div.play-area {
         height: 51px;
       }
     }
+  }
 
-    div.hand {
-      width: 80px;
-      height: 400px;
-      margin: 10px;
+  div.hand {
+    width: 700px;
+    height: 30px;
+    margin-left: 80px;
+
+    .card {
       float: left;
     }
   }
