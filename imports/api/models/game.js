@@ -39,12 +39,7 @@ export class Game {
         m: 2,
         r: 2,
       });
-      this.discards = Array(2).fill({
-        a: 0,
-        b: 0,
-        m: 0,
-        r: 0,
-      });
+      this.discards = [[], []];
       this.confirms = Array(2).fill(false);
 
       // add initial tokens
@@ -276,6 +271,11 @@ export class Game {
       }
     }
     return null;
+  }
+
+  userDiscardCard(type) {
+    this.discards[this.userIndex()].push(type);
+    this.hands[this.userIndex()][type] -= 1;
   }
 
   opponentIndex() {

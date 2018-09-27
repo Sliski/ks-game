@@ -73,6 +73,12 @@ const GameController = {
     game.userFlipOrder(unitIndex);
     Games.saveGame(game);
   },
+
+  userDiscardCard(gameId, type) {
+    const game = Games.findOne(gameId);
+    game.userDiscardCard(type);
+    Games.saveGame(game);
+  },
 };
 
 export { GameController as default };
