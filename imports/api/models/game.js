@@ -201,20 +201,33 @@ export class Game {
 
     // move 1 step forward if both players confirmed setup.
     if (this.step === GameSteps.SETUP && this.confirms[0] && this.confirms[1]) {
+      this.step = GameSteps.PLANNING;
       this.confirms[0] = false;
       this.confirms[1] = false;
-      this.step = GameSteps.PLANNING;
     }
 
     // move 1 step forward if both players confirmed planning.
     if (this.step === GameSteps.PLANNING && this.confirms[0] && this.confirms[1]) {
-      // this.confirms[0] = true;
-      // this.confirms[1] = false;
-      // this.step = GameSteps.EXECUTION;
-      // for testing purposes:
+      this.step = GameSteps.EXECUTION;
       this.confirms[0] = false;
       this.confirms[1] = false;
-      this.step = GameSteps.SETUP;
+    }
+
+    // start next round if both players
+    if (this.step === GameSteps.EXECUTION && this.confirms[0] && this.confirms[1]) {
+      for (let i = 0; i < 2; i += 1) {
+        while (this.discards[i].length > 0) {
+          this.hands[i][this.discards[i].pop()] += 1;
+        }
+        for (let j = 0; j < 3; j += 1) {
+          this.discards[i].push(this.units[i][j].order.type);
+          this.units[i][j].order.type = null;
+          this.units[i][j].order.flipped = true;
+        }
+      }
+      this.step = GameSteps.PLANNING;
+      this.confirms[0] = false;
+      this.confirms[1] = false;
     }
   }
 
