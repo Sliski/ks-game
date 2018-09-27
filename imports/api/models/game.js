@@ -41,6 +41,7 @@ export class Game {
       });
       this.discards = [[], []];
       this.confirms = Array(2).fill(false);
+      this.firstPlayer = Math.floor(Math.random() * 2);
 
       // add initial tokens
       this.tray.push({
@@ -142,7 +143,18 @@ export class Game {
   }
 
   persistentFields() {
-    return ['status', 'step', 'board', 'tray', 'players', 'units', 'hands', 'discards', 'confirms'];
+    return [
+      'status',
+      'step',
+      'board',
+      'tray',
+      'players',
+      'units',
+      'hands',
+      'discards',
+      'confirms',
+      'firstPlayer',
+    ];
   }
 
   userJoin(user) {
@@ -225,6 +237,7 @@ export class Game {
           this.units[i][j].order.flipped = true;
         }
       }
+      this.firstPlayer = (this.firstPlayer + 1) % 2;
       this.step = GameSteps.PLANNING;
       this.confirms[0] = false;
       this.confirms[1] = false;

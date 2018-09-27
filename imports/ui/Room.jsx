@@ -45,7 +45,7 @@ class Room extends Component {
     const { game } = this.props;
     let status = '';
     if (game.status === GameStatuses.STARTED) {
-      status = 'In Progress.';
+      status = `In Progress. First player: ${game.players[game.firstPlayer].username}`;
     } else if (game.status === GameStatuses.FINISHED) {
       status = 'Finished.';
     }
