@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { cardTypes } from './Card.jsx';
 import GameController from '../api/controllers/gameController.js';
+import { GameSteps } from '../api/models/game.js';
 
 export default class Order extends Component {
   getCardText() {
@@ -11,7 +12,11 @@ export default class Order extends Component {
   }
 
   isClickable() {
-    return this.props.flipped && this.props.playerIndex === this.props.game.userIndex();
+    return (
+      this.props.flipped
+      && this.props.playerIndex === this.props.game.userIndex()
+      && this.props.game.step === GameSteps.EXECUTION
+    );
   }
 
   handleClick(e) {
