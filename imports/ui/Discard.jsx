@@ -30,9 +30,11 @@ class Discard extends Component {
     const { game, playerIndex } = this.props;
     const discard = game.discards[playerIndex];
     const flipped = game.step === GameSteps.SETUP;
-    return discard.map((type, i) => (
-      <Order type={type} flipped={flipped} playerIndex={-1} key={type + i} game={game} />
-    ));
+    return discard
+      .sort()
+      .map((type, i) => (
+        <Order type={type} flipped={flipped} playerIndex={-1} key={type + i} game={game} />
+      ));
   }
 
   render() {
