@@ -26,9 +26,9 @@ const GameController = {
     Games.saveGame(game);
   },
 
-  userConfirm(gameId) {
+  userConfirm(gameId, markedCards) {
     const game = Games.findOne(gameId);
-    game.userConfirm();
+    game.userConfirm(markedCards);
     Games.saveGame(game);
   },
 

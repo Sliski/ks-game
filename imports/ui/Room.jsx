@@ -9,6 +9,8 @@ import UnitStatCard from './UnitStatCard.jsx';
 import Hand from './Hand.jsx';
 import Discard from './Discard.jsx';
 
+const markedCards = [];
+
 class Room extends Component {
   handleBackToRoomsList() {
     this.props.backToRoomsListHandler();
@@ -19,7 +21,7 @@ class Room extends Component {
   }
 
   handleConfirm() {
-    GameController.userConfirm(this.props.game);
+    GameController.userConfirm(this.props.game, markedCards);
   }
 
   _isConcedeDisabled() {
@@ -80,7 +82,7 @@ class Room extends Component {
             {this.renderTeamBox('user')}
             <Discard playerIndex={this.props.game.playerIndex('user')} game={this.props.game} />
           </div>
-          <Hand game={this.props.game} />
+          <Hand game={this.props.game} markedCards={markedCards} />
         </div>
         <button
           type="button"

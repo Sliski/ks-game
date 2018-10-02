@@ -201,7 +201,7 @@ export class Game {
     this.status = GameStatuses.FINISHED;
   }
 
-  userConfirm() {
+  userConfirm(markedCards) {
     const userIndex = this.userIndex();
     if (userIndex === null) {
       throw new Error('user not in game');
@@ -209,6 +209,15 @@ export class Game {
     if (this.confirms[userIndex]) {
       throw new Error('Already confirmed.');
     }
+    if (this.step === GameSteps.SETUP) {
+      if (markedCards.length === 3) {
+        markedCards.map(type => this.userDiscardCard(type));
+      } else {
+        // TODO show error on screen
+        throw new Error('3 cards have to be choosen.');
+      }
+    }
+
     this.confirms[userIndex] = true;
 
     // move 1 step forward if both players confirmed setup.

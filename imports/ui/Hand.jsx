@@ -3,13 +3,20 @@ import Card from './Card.jsx';
 
 export default class Hand extends Component {
   renderCards() {
-    const { game } = this.props;
+    const { game, markedCards } = this.props;
     const hand = game.hands[game.userIndex()];
     const cards = [];
     _.each(hand, (amount, type) => {
       _.times(amount, (index) => {
         cards.push(
-          <Card type={type} flip={false} owner={game.userIndex()} key={type + index} game={game} />,
+          <Card
+            type={type}
+            flip={false}
+            owner={game.userIndex()}
+            key={type + index}
+            game={game}
+            markedCards={markedCards}
+          />,
         );
       });
     });
