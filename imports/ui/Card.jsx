@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
-import { ItemTypes } from '../api/models/game.js';
+import { ItemTypes, GameSteps } from '../api/models/game.js';
 
 export const cardTypes = {
   a: 'Attack A',
@@ -31,9 +31,9 @@ class Card extends Component {
 
   render() {
     const {
-      connectDragSource, isDragging, type, flipped,
+      connectDragSource, isDragging, type, flipped, game,
     } = this.props;
-    return connectDragSource(
+    const card = (
       <div
         style={{
           opacity: isDragging ? 0.5 : 1,
@@ -42,8 +42,12 @@ class Card extends Component {
         className={`card card-${type} card-${flipped ? 'flipped' : 'revealed'}`}
       >
         {this.getCardText()}
-      </div>,
+      </div>
     );
+    if (game.step !== GameSteps.PLANNING) {
+      return card;
+    }
+    return connectDragSource(card);
   }
 }
 
