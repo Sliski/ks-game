@@ -39,8 +39,22 @@ class Tile extends Component {
   }
 
   render() {
-    const { connectDropTarget } = this.props;
-    return connectDropTarget(<div className="tile">{this.tileContent()}</div>);
+    const { connectDropTarget, isOver } = this.props;
+    return connectDropTarget(
+      <div
+        className="tile"
+        style={
+          isOver
+            ? {
+              opacity: 0.5,
+              backgroundColor: 'yellow',
+            }
+            : {}
+        }
+      >
+        {this.tileContent()}
+      </div>,
+    );
   }
 }
 
