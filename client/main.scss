@@ -74,11 +74,19 @@ div.play-area {
     width: 100%;
     height: 104px;
 
+    div.player-name-box {
+      float: left;
+      margin: 10px;
+      width: 55px;
+      height: 84px;
+      text-align: center;
+      font-weight: bold;
+    }
+
     div.team-box {
       width: 480px;
       height: 82px;
       margin: 10px;
-      margin-left: 85px;
       border: 1px solid black;
       float: left;
 
@@ -137,7 +145,7 @@ div.play-area {
       width: 80px;
       height: 84px;
       margin: 10px;
-      background: grey;
+      margin-left: 0px;
       float: left;
     }
   }

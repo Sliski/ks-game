@@ -9,7 +9,7 @@ export default class Chat extends Component {
   render() {
     return (
       <textarea
-        name="chat"
+        className="chat"
         style={{ resize: 'none' }}
         cols="40"
         rows="5"

@@ -32,6 +32,19 @@ class Room extends Component {
     );
   }
 
+  renderPlayerNameBox(player) {
+    const { game } = this.props;
+    const playerIndex = game.playerIndex(player);
+    console.log(game.players);
+    return (
+      <div className="player-name-box">
+        {game.players[playerIndex].username}
+        {game.firstPlayer === playerIndex ? <br /> : ''}
+        {game.firstPlayer === playerIndex ? '[1] ' : ''}
+      </div>
+    );
+  }
+
   renderTeamBox(player) {
     const { game } = this.props;
     const playerIndex = game.playerIndex(player);
@@ -72,6 +85,7 @@ class Room extends Component {
         {this.renderStatus()}
         <div className="play-area">
           <div className="top-bottom-box">
+            {this.renderPlayerNameBox('opponent')}
             {this.renderTeamBox('opponent')}
             <Discard playerIndex={this.props.game.playerIndex('opponent')} game={this.props.game} />
           </div>
@@ -81,6 +95,7 @@ class Room extends Component {
             <Chat game={this.props.game} />
           </div>
           <div className="top-bottom-box">
+            {this.renderPlayerNameBox('user')}
             {this.renderTeamBox('user')}
             <Discard playerIndex={this.props.game.playerIndex('user')} game={this.props.game} />
           </div>
