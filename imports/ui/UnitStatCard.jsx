@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import { ItemTypes, GameSteps } from '../api/models/game.js';
-import { icons } from '../icons/tokens.jsx';
 import GameController from '../api/controllers/gameController.js';
 import Order from './Order.jsx';
+import UnitIcon from './UnitIcon.jsx';
 
 const unitStatCardTarget = {
   drop(props, monitor) {
@@ -65,7 +65,7 @@ class UnitStatCard extends Component {
     return connectDropTarget(
       <div className={`unit-stat-card unit-${unit.type}`}>
         <div className="left-part">
-          <div className="unit-img">{icons[unit.type]}</div>
+          <UnitIcon owner={playerIndex} type={unit.type} game={game} />
           <div className="hp-bar">
             <button
               type="button"
