@@ -79,6 +79,12 @@ const GameController = {
     game.userDiscardCard(type);
     Games.saveGame(game);
   },
+
+  userTypeInTextArea(gameId, text) {
+    const game = Games.findOne(gameId);
+    game.userTypeInTextArea(text);
+    Games.saveGame(game);
+  },
 };
 
 export { GameController as default };

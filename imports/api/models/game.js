@@ -42,6 +42,7 @@ export class Game {
       this.discards = [[], []];
       this.confirms = Array(2).fill(false);
       this.firstPlayer = Math.floor(Math.random() * 2);
+      this.textarea = '';
 
       // add initial tokens
       this.tray.push({
@@ -154,6 +155,7 @@ export class Game {
       'discards',
       'confirms',
       'firstPlayer',
+      'textarea',
     ];
   }
 
@@ -311,6 +313,10 @@ export class Game {
   userDiscardCard(type) {
     this.discards[this.userIndex()].push(type);
     this.hands[this.userIndex()][type] -= 1;
+  }
+
+  userTypeInTextArea(text) {
+    this.textarea = text;
   }
 
   opponentIndex() {

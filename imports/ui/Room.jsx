@@ -8,6 +8,7 @@ import Tile from './Tile.jsx';
 import UnitStatCard from './UnitStatCard.jsx';
 import Hand from './Hand.jsx';
 import Discard from './Discard.jsx';
+import Chat from './Chat.jsx';
 
 const markedCards = [];
 
@@ -77,6 +78,7 @@ class Room extends Component {
           <div className="center-box">
             <Tray game={this.props.game} />
             <Board game={this.props.game} />
+            <Chat game={this.props.game} />
           </div>
           <div className="top-bottom-box">
             {this.renderTeamBox('user')}
