@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
 
-const ar = ['nderu', 'derun', 'erunn'];
-const eff = [
-  { type: 'arrow', data: { type: 'U', offset: { x: 20, y: 20 } } },
-  { type: 'arrow', data: { type: 'D', offset: { x: 0, y: 0 } } },
-  { type: 'dotted-line', data: { start: { x: 0, y: 0 }, end: { x: 20, y: 20 } } },
-];
-
 const tileClass = {
   d: 'damage', // damage
   e: 'effect', // effect
@@ -37,14 +30,6 @@ const arrows = {
 };
 
 export default class AttackVisualisation extends Component {
-  // <rect width="20" height="20" fill="none" stroke="black" strokeWidth="2" />
-  // <rect x="0" y="20" width="20" height="20" fill="none" stroke="black" strokeWidth="2" />
-  // <rect width="20" height="20" fill="none" stroke="black" strokeWidth="2" />
-
-  getFill() {
-    return 'none';
-  }
-
   renderDottedLine(start, end) {
     return (
       <line
@@ -68,7 +53,7 @@ export default class AttackVisualisation extends Component {
     );
   }
 
-  renderEffects(effects) {
+  renderOverlay(effects) {
     return effects.map((effect) => {
       if (effect.type === 'arrow') return this.renderArrow(effect.data.type, effect.data.offset);
       if (effect.type === 'dotted-line') return this.renderDottedLine(effect.data.start, effect.data.end);
@@ -92,16 +77,11 @@ export default class AttackVisualisation extends Component {
   }
 
   render() {
-    const tiles = ar;
-    const arr = eff;
+    const { tiles, overlay } = this.props.visualisation;
+    if (tiles[0].length === 0) return '';
     return (
       <div className="attack-visualisation">
-        <svg
-          className="skill-svg"
-          viewBox={`0 0 ${ar[0].length * 20} ${ar.length * 20}`}
-          width={ar[0].length * 20}
-          height={ar.length * 20}
-        >
+        <svg className="skill-svg" viewBox={`0 0 ${tiles[0].length * 20} ${tiles.length * 20}`}>
           <defs>
             <pattern id="unit-up" width="20" height="20">
               <rect className="unit-bg" width="20" height="20" />
@@ -113,7 +93,7 @@ export default class AttackVisualisation extends Component {
             </pattern>
           </defs>
           {this.renderTiles(tiles)}
-          {this.renderEffects(arr)}
+          {this.renderOverlay(overlay)}
         </svg>
       </div>
     );

@@ -14,6 +14,19 @@ import UnitSkillCard from './UnitSkillCard.jsx';
 const markedCards = [];
 
 class Room extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { preview: 'template' };
+    this.handlePreviewUpdate = this.handlePreviewUpdate.bind(this);
+  }
+
+  handlePreviewUpdate(unitType, e) {
+    e.preventDefault();
+    this.setState({
+      preview: unitType,
+    });
+  }
+
   handleBackToRoomsList() {
     this.props.backToRoomsListHandler();
   }
@@ -50,9 +63,24 @@ class Room extends Component {
     const playerIndex = game.playerIndex(player);
     return (
       <div className={`team-box player-${playerIndex}`}>
-        <UnitStatCard unitIndex={0} playerIndex={playerIndex} game={game} />
-        <UnitStatCard unitIndex={1} playerIndex={playerIndex} game={game} />
-        <UnitStatCard unitIndex={2} playerIndex={playerIndex} game={game} />
+        <UnitStatCard
+          handlePreviewUpdate={this.handlePreviewUpdate}
+          unitIndex={0}
+          playerIndex={playerIndex}
+          game={game}
+        />
+        <UnitStatCard
+          handlePreviewUpdate={this.handlePreviewUpdate}
+          unitIndex={1}
+          playerIndex={playerIndex}
+          game={game}
+        />
+        <UnitStatCard
+          handlePreviewUpdate={this.handlePreviewUpdate}
+          unitIndex={2}
+          playerIndex={playerIndex}
+          game={game}
+        />
       </div>
     );
   }
@@ -94,7 +122,7 @@ class Room extends Component {
             <Board game={this.props.game} />
             <div className="center-right">
               <Chat game={this.props.game} />
-              <UnitSkillCard />
+              <UnitSkillCard unitType={this.state.preview} />
             </div>
           </div>
           <div className="top-bottom-box">

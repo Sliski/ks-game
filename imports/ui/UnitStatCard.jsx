@@ -59,11 +59,15 @@ class UnitStatCard extends Component {
 
   render() {
     const {
-      connectDropTarget, game, playerIndex, unitIndex,
+      connectDropTarget, game, playerIndex, unitIndex, handlePreviewUpdate,
     } = this.props;
     const unit = game.units[playerIndex][unitIndex];
     return connectDropTarget(
-      <div className={`unit-stat-card unit-${unit.type}`}>
+      <div
+        onMouseOver={handlePreviewUpdate.bind(this, unit.type)}
+        onFocus={handlePreviewUpdate.bind(this, unit.type)}
+        className={`unit-stat-card unit-${unit.type}`}
+      >
         <div className="left-part">
           <UnitIcon owner={playerIndex} type={unit.type} game={game} />
           <div className="hp-bar">

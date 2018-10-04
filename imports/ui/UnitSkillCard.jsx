@@ -1,28 +1,35 @@
 import React, { Component } from 'react';
+import { icons } from '../icons/tokens.jsx';
 import AttackVisualisation from './AttackVisualisation.jsx';
+import { units } from '../api/models/units.js';
 
 export default class UnitSkillCard extends Component {
-  renderDescription(orderType, unitType) {
-    return `${orderType} ${unitType}`;
+  renderDescription(orderType, unit) {
+    return <div className="skill-description">{unit.skills[orderType].desc}</div>;
   }
 
   render() {
     const { unitType } = this.props;
+    const unit = units[unitType];
     return (
       <div className="unit-skill-card">
+        <div className="skill-card-header">
+          {icons[unitType]}
+          <span className="unit-name">{unit.name}</span>
+        </div>
         <div className="skill attack-a">
-          <h3>Attack A</h3>
-          {this.renderDescription('A', unitType)}
-          <AttackVisualisation />
+          <div className="skill-name">Attack A</div>
+          {this.renderDescription('a', unit)}
+          <AttackVisualisation visualisation={unit.skills.a.visualisation} />
         </div>
         <div className="skill attack-b">
-          <h3>Attack B</h3>
-          {this.renderDescription('B', unitType)}
-          <AttackVisualisation />
+          <div className="skill-name">Attack B</div>
+          {this.renderDescription('b', unit)}
+          <AttackVisualisation visualisation={unit.skills.b.visualisation} />
         </div>
         <div className="skill move">
-          <h3>Move</h3>
-          {this.renderDescription('M', unitType)}
+          <div className="skill-name">Move</div>
+          {this.renderDescription('m', unit)}
         </div>
       </div>
     );
