@@ -11,8 +11,7 @@ export default class Chat extends Component {
       <textarea
         className="chat"
         style={{ resize: 'none' }}
-        cols="40"
-        rows="5"
+        placeholder="shared space for notes"
         onChange={this.handleChange.bind(this)}
         value={this.props.game.textarea}
       />

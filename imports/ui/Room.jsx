@@ -9,6 +9,7 @@ import UnitStatCard from './UnitStatCard.jsx';
 import Hand from './Hand.jsx';
 import Discard from './Discard.jsx';
 import Chat from './Chat.jsx';
+import UnitSkillCard from './UnitSkillCard.jsx';
 
 const markedCards = [];
 
@@ -35,7 +36,6 @@ class Room extends Component {
   renderPlayerNameBox(player) {
     const { game } = this.props;
     const playerIndex = game.playerIndex(player);
-    console.log(game.players);
     return (
       <div className="player-name-box">
         {game.players[playerIndex].username}
@@ -92,7 +92,10 @@ class Room extends Component {
           <div className="center-box">
             <Tray game={this.props.game} />
             <Board game={this.props.game} />
-            <Chat game={this.props.game} />
+            <div className="center-right">
+              <Chat game={this.props.game} />
+              <UnitSkillCard />
+            </div>
           </div>
           <div className="top-bottom-box">
             {this.renderPlayerNameBox('user')}

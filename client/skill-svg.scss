@@ -1,0 +1,50 @@
+.skill-svg {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  .small-tile {
+    stroke: black;
+    stroke-width: 1;
+  }
+
+  //default tile fills
+  .tile-damage {
+    fill: #ff2d2d;
+  }
+  .tile-effect {
+    fill: yellow;
+  }
+  .tile-unit-right {
+    fill: url(#unit-right);
+  }
+  .tile-unit-up {
+    fill: url(#unit-up);
+  }
+  .tile-none {
+    fill: none;
+  }
+
+  //pattern's styles
+  .unit-bg {
+    fill: #08e069;
+  }
+  .unit-triangle {
+    fill: black;
+  }
+
+  //additional markers
+  .push-arrow {
+    fill: none;
+    stroke: black;
+    stroke-width: 2;
+  }
+  .dotted-line {
+    stroke: black;
+    stroke-width: 2;
+    stroke-dasharray: 3, 2;
+  }
+}
