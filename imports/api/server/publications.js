@@ -1,4 +1,4 @@
-import { GameStatuses } from '../models/game.js';
+import { GameStatuses } from '../models/gameConst.js';
 import Games from '../collections/games.js';
 
 Meteor.publish('games', function sync() {

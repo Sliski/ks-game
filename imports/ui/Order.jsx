@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { cardTypes } from './Card.jsx';
 import GameController from '../api/controllers/gameController.js';
-import { GameSteps } from '../api/models/game.js';
+import { GameSteps } from '../api/models/gameConst.js';
 
 export default class Order extends Component {
   getCardText() {

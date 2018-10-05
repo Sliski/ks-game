@@ -1,145 +1,17 @@
-// status of the game
-export const GameStatuses = {
-  WAITING: 'WAITING', // waiting player to join
-  STARTED: 'STARTED', // all spots are filled; can start playing
-  FINISHED: 'FINISHED', // game is finished
-  ABANDONED: 'ABANDONED', // all players left; game is abandoned
-};
-
-// game steps
-export const GameSteps = {
-  SETUP: 'setup',
-  PLANNING: 'planning',
-  EXECUTION: 'execution',
-};
-
-// Draggable item types
-export const ItemTypes = {
-  TOKEN: 'token',
-  CARD: 'card',
-};
-
-// width and height of board
-const BOARD_SIZE = 6;
+import { gameTemplate } from './gameTemplate.js';
+import { GameStatuses, GameSteps } from './gameConst.js';
 
 export class Game {
   constructor(gameDoc) {
     if (gameDoc) {
       _.extend(this, gameDoc);
     } else {
-      this.status = GameStatuses.WAITING;
-      this.step = GameSteps.SETUP;
-      this.board = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill([]));
-      this.tray = [];
-      this.players = [];
-      this.units = [[], []];
-      this.hands = Array(2).fill({
-        a: 2,
-        b: 2,
-        m: 2,
-        r: 2,
+      // prepare default values in game object
+      this.persistentFields().forEach((field) => {
+        this[field] = gameTemplate[field];
       });
-      this.discards = [[], []];
-      this.confirms = Array(2).fill(false);
+      // choose 1st player randomly
       this.firstPlayer = Math.floor(Math.random() * 2);
-      this.textarea = '';
-
-      // add initial tokens
-      this.tray.push({
-        player: 0,
-        type: 'pl',
-        rotate: 0,
-      });
-      this.tray.push({
-        player: 0,
-        type: 'cb',
-        rotate: 0,
-      });
-      this.tray.push({
-        player: 0,
-        type: 'rd',
-        rotate: 0,
-      });
-      this.tray.push({
-        player: 1,
-        type: 'lv',
-        rotate: 0,
-      });
-      this.tray.push({
-        player: 1,
-        type: 'st',
-        rotate: 0,
-      });
-      this.tray.push({
-        player: 1,
-        type: 'bh',
-        rotate: 0,
-      });
-      this.tray.push({
-        player: -1,
-        type: 'mountain',
-        rotate: -1,
-      });
-      this.tray.push({
-        player: -1,
-        type: 'lake',
-        rotate: -1,
-      });
-      this.tray.push({
-        player: -1,
-        type: 'building',
-        rotate: -1,
-      });
-
-      // add units
-      this.units[0].push({
-        type: 'pl',
-        hp: 4,
-        order: {
-          type: null,
-          flipped: true,
-        },
-      });
-      this.units[0].push({
-        type: 'cb',
-        hp: 4,
-        order: {
-          type: null,
-          flipped: true,
-        },
-      });
-      this.units[0].push({
-        type: 'rd',
-        hp: 4,
-        order: {
-          type: null,
-          flipped: true,
-        },
-      });
-      this.units[1].push({
-        type: 'lv',
-        hp: 4,
-        order: {
-          type: null,
-          flipped: true,
-        },
-      });
-      this.units[1].push({
-        type: 'st',
-        hp: 4,
-        order: {
-          type: null,
-          flipped: true,
-        },
-      });
-      this.units[1].push({
-        type: 'bh',
-        hp: 4,
-        order: {
-          type: null,
-          flipped: true,
-        },
-      });
     }
   }
 

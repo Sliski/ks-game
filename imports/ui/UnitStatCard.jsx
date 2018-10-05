@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
-import { ItemTypes, GameSteps } from '../api/models/game.js';
+import { ItemTypes, GameSteps } from '../api/models/gameConst.js';
 import GameController from '../api/controllers/gameController.js';
 import Order from './Order.jsx';
 import UnitIcon from './UnitIcon.jsx';

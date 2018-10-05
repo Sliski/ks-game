@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import GameController from '../api/controllers/gameController.js';
-import { GameStatuses } from '../api/models/game.js';
+import { GameStatuses } from '../api/models/gameConst.js';
 import Tray from './Tray.jsx';
 import Tile from './Tile.jsx';
 import UnitStatCard from './UnitStatCard.jsx';

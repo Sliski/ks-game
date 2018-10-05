@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GameSteps } from '../api/models/game.js';
+import { GameSteps } from '../api/models/gameConst.js';
 import Order from './Order.jsx';
 
 export default class Discard extends Component {

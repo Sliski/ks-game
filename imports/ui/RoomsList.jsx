@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import UserHeader from './UserHeader.jsx';
 import GameController from '../api/controllers/gameController.js';
-import { GameStatuses } from '../api/models/game.js';
+import { GameStatuses } from '../api/models/gameConst.js';
 
 export default class RoomsList extends Component {
   handleNewGame() {

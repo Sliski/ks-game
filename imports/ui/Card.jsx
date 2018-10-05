@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
-import { ItemTypes, GameSteps } from '../api/models/game.js';
+import { ItemTypes, GameSteps } from '../api/models/gameConst.js';
 
 export const cardTypes = {
   a: 'Attack A',

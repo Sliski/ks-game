@@ -3,6 +3,7 @@ module.exports = {
   rules: {
     'import/extensions': [2, 'ignorePackages'],
     'no-underscore-dangle': [2, { allowAfterThis: true, allow: ['_id'] }],
+    'import/prefer-default-export': [0],
     'no-console': [0], //ignore before release
     'class-methods-use-this': [0],
     'react/prop-types': [0], //temporary disabled
