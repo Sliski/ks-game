@@ -94,7 +94,7 @@ class Room extends Component {
       status = 'Finished.';
     }
 
-    return <div>{status}</div>;
+    return <div className="game-status">{status}</div>;
   }
 
   render() {
