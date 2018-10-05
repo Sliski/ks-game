@@ -10,6 +10,16 @@ div.game-status {
   border-bottom: solid black 2px;
 }
 
+span.confirm-error {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+button.confirm-button {
+  width: 140px;
+  font-weight: bold;
+}
+
 div.play-area {
   width: 1080px;
   height: 720px;

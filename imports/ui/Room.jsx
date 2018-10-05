@@ -16,7 +16,7 @@ const markedCards = [];
 class Room extends Component {
   constructor(props) {
     super(props);
-    this.state = { preview: 'template' };
+    this.state = { preview: 'template', confirmationError: '' };
     this.handlePreviewUpdate = this.handlePreviewUpdate.bind(this);
   }
 
@@ -36,7 +36,12 @@ class Room extends Component {
   }
 
   handleConfirm() {
-    GameController.userConfirm(this.props.game, markedCards);
+    try {
+      GameController.userConfirm(this.props.game, markedCards);
+      this.setState({ confirmationError: '' });
+    } catch (e) {
+      this.setState({ confirmationError: e.message });
+    }
   }
 
   _isConcedeDisabled() {
@@ -134,12 +139,14 @@ class Room extends Component {
         </div>
         <button
           type="button"
+          className="confirm-button"
           disabled={this.props.game.getUserConfirmStatus()}
           onClick={this.handleConfirm.bind(this)}
         >
           Confirm
           {` ${this.props.game.step}`}
         </button>
+        <span className="confirm-error">{this.state.confirmationError}</span>
       </div>
     );
   }

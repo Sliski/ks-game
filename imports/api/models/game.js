@@ -85,11 +85,22 @@ export class Game {
     }
     if (this.step === GameSteps.SETUP) {
       if (markedCards.length === 3) {
-        markedCards.map(type => this.userDiscardCard(type));
+        markedCards.forEach(type => this.userDiscardCard(type));
       } else {
-        // TODO show error on screen
-        throw new Error('3 cards have to be choosen.');
+        throw new Error('Choose exactly 3 cards to discard.');
       }
+    }
+    if (
+      this.step === GameSteps.PLANNING
+      && this.units[userIndex].map(unit => unit.order.type).includes(null)
+    ) {
+      throw new Error('Choose order for each character.');
+    }
+    if (
+      this.step === GameSteps.EXECUTION
+      && this.units[userIndex].map(unit => unit.order.flipped).includes(true)
+    ) {
+      throw new Error('Execute all orders before ending round.');
     }
 
     this.confirms[userIndex] = true;
