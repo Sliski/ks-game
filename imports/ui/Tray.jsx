@@ -7,7 +7,7 @@ import Token from './Token.jsx';
 const trayTarget = {
   drop(props, monitor) {
     const { x, y } = monitor.getItem();
-    GameController.removeToken(props.game._id, x, y);
+    if (x >= 0 && y >= 0) GameController.removeToken(props.game._id, x, y);
   },
 };
 
