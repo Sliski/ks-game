@@ -12,7 +12,7 @@ export const gameTemplate = {
   status: GameStatuses.WAITING,
   step: GameSteps.SETUP,
   board: Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill([])),
-  tray: ['mountain', 'lake', 'building'].map(type => ({
+  tray: ['mountain', 'lake', 'building', 'buildinga', 'buildingb', 'zone'].map(type => ({
     player: -1,
     type,
     rotate: -1,

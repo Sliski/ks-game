@@ -27,7 +27,7 @@ div.play-area {
   border-bottom: 2px solid black;
 
   .token-bg-1 {
-    fill: #ff2d2d;
+    fill: #f75c03;
   }
 
   .token-bg-2 {
@@ -83,15 +83,30 @@ div.play-area {
   }
 
   .token-mountain {
-    background: #996633;
+    background: #b28a72;
   }
 
   .token-lake {
-    background: #00ccff;
+    background: #3da5d9;
   }
 
   .token-building {
-    background: #e0e0eb;
+    background: #e2e2e2;
+  }
+
+  .token-buildinga {
+    background: #08e069;
+  }
+
+  .token-buildingb {
+    background: #f75c03;
+  }
+
+  .token-zone {
+    background: #e2e2e2;
+    polygon {
+      fill: #898989;
+    }
   }
 
   div.top-bottom-box {

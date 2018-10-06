@@ -377,6 +377,18 @@ const mountainToken = (
   </svg>
 );
 
+const zoneToken = (
+  <svg viewBox="0 0 78 78">
+    <defs>
+      <pattern id="stripes" width="40" height="40" patternUnits="userSpaceOnUse">
+        <polygon id="stripe-a" points="0 40 40 0 20 0 0 20" />
+        <polygon id="stripe-b" points="40 40 40 20 20 40" />
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#stripes)" />
+  </svg>
+);
+
 export const tokens = {
   lv: lvToken,
   st: stToken,
@@ -384,9 +396,12 @@ export const tokens = {
   pl: plToken,
   rd: rdToken,
   cb: cbToken,
-  lake: lakeToken,
-  building: buildingToken,
   mountain: mountainToken,
+  lake: lakeToken,
+  zone: zoneToken,
+  building: buildingToken,
+  buildinga: buildingToken,
+  buildingb: buildingToken,
 };
 
 export const icons = {
