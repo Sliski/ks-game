@@ -38,6 +38,22 @@ class Tile extends Component {
     );
   }
 
+  renderRowMarker() {
+    const { x, y } = this.props;
+    if (x === 0) {
+      return <div className="row-marker">{y + 1}</div>;
+    }
+    return '';
+  }
+
+  renderColMarker() {
+    const { y, x } = this.props;
+    if (y === 0) {
+      return <div className="col-marker">{['A', 'B', 'C', 'D', 'E', 'F'][x]}</div>;
+    }
+    return '';
+  }
+
   render() {
     const { connectDropTarget, isOver } = this.props;
     return connectDropTarget(
@@ -52,6 +68,8 @@ class Tile extends Component {
             : {}
         }
       >
+        {this.renderRowMarker()}
+        {this.renderColMarker()}
         {this.tileContent()}
       </div>,
     );

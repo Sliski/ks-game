@@ -223,6 +223,25 @@ div.play-area {
         width: 78px;
         height: 78px;
         border: 1px solid black;
+        position: relative;
+
+        .row-marker,
+        .col-marker {
+          width: 15px;
+          height: 15px;
+          position: absolute;
+          font-weight: bold;
+          text-align: center;
+          font-size: 13px;
+        }
+        .row-marker {
+          top: 0px;
+          right: 0px;
+        }
+        .col-marker {
+          bottom: 0px;
+          left: 0px;
+        }
       }
     }
 
