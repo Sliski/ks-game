@@ -229,6 +229,7 @@ div.play-area {
         .col-marker {
           width: 15px;
           height: 15px;
+          z-index: 1000;
           position: absolute;
           font-weight: bold;
           text-align: center;
