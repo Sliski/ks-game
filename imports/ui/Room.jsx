@@ -32,12 +32,12 @@ class Room extends Component {
   }
 
   handleConcede() {
-    GameController.userConcedeGame(this.props.game);
+    GameController.userConcedeGame(this.props.game._id);
   }
 
   handleConfirm() {
     try {
-      GameController.userConfirm(this.props.game, markedCards);
+      GameController.userConfirm(this.props.game._id, markedCards);
       this.setState({ confirmationError: '' });
     } catch (e) {
       this.setState({ confirmationError: e.message });
