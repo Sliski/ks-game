@@ -64,7 +64,7 @@ const st = {
         overlay: [],
       },
     },
-    m: { desc: 'Przesuń Stormtroopera 1 pole do przodu lub do tyłu.' },
+    m: { desc: 'Przesuń Stormtroopera 1 pole w dowolnym kierunku.' },
   },
 };
 
