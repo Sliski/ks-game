@@ -28,6 +28,7 @@ class Room extends Component {
   }
 
   handleBackToRoomsList() {
+    markedCards.splice(markedCards.length);
     this.props.backToRoomsListHandler();
   }
 

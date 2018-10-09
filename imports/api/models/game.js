@@ -143,7 +143,8 @@ export class Game {
   }
 
   moveToken(from, to) {
-    this.board[to.x][to.y].push(this.board[from.x][from.y].pop());
+    const token = this.board[from.x][from.y].pop();
+    if (token) this.board[to.x][to.y].push(token);
   }
 
   rotateToken(x, y) {
