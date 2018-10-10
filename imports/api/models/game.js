@@ -7,9 +7,7 @@ export class Game {
       _.extend(this, gameDoc);
     } else {
       // prepare default values in game object
-      this.persistentFields().forEach((field) => {
-        this[field] = gameTemplate[field];
-      });
+      _.extend(this, JSON.parse(JSON.stringify(gameTemplate)));
       // choose 1st player randomly
       this.firstPlayer = Math.floor(Math.random() * 2);
     }
@@ -37,12 +35,12 @@ export class Game {
     }
     if (this.userIndex() !== null) {
       throw new Error('User already in game.');
-    } else {
-      this.players.push({
-        userId: user._id,
-        username: user.username,
-      });
     }
+
+    this.players.push({
+      userId: user._id,
+      username: user.username,
+    });
 
     // game automatically start with 2 players
     if (this.players.length === 2) {
