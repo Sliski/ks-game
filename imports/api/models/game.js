@@ -35,10 +35,14 @@ export class Game {
     if (this.status !== GameStatuses.WAITING) {
       throw new Error('cannot join at current state');
     }
-    this.players.push({
-      userId: user._id,
-      username: user.username,
-    });
+    if (this.userIndex() !== null) {
+      throw new Error('User already in game.');
+    } else {
+      this.players.push({
+        userId: user._id,
+        username: user.username,
+      });
+    }
 
     // game automatically start with 2 players
     if (this.players.length === 2) {
