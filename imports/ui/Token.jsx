@@ -36,7 +36,9 @@ class Token extends Component {
   }
 
   render() {
-    const { connectDragSource, isDragging, data } = this.props;
+    const {
+      handlePreviewUpdate, connectDragSource, isDragging, data,
+    } = this.props;
     return connectDragSource(
       <div
         style={{
@@ -47,6 +49,8 @@ class Token extends Component {
         }}
         className={`token token-${data.type}${data.rotate === -1 ? '' : ` rotate-${data.rotate}`}`}
         onContextMenu={this.handleRightClick.bind(this)}
+        onMouseOver={data.type.length === 2 ? handlePreviewUpdate.bind(this, data.type) : null}
+        onFocus={data.type.length === 2 ? handlePreviewUpdate.bind(this, data.type) : null}
       >
         {this.getIcon(data)}
       </div>,

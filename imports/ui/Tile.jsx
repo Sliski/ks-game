@@ -34,6 +34,7 @@ class Tile extends Component {
         x={this.props.x}
         y={this.props.y}
         gameId={this.props.game._id}
+        handlePreviewUpdate={this.props.handlePreviewUpdate}
       />
     );
   }

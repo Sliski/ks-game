@@ -125,7 +125,7 @@ class Room extends Component {
           </div>
           <div className="center-box">
             <Tray game={this.props.game} />
-            <Board game={this.props.game} />
+            <Board game={this.props.game} handlePreviewUpdate={this.handlePreviewUpdate} />
             <div className="center-right">
               <Chat game={this.props.game} />
               <UnitSkillCard unitType={this.state.preview} />
@@ -154,13 +154,21 @@ class Room extends Component {
 }
 
 function Board(props) {
-  const rows = props.game.board.map((row, i) => <Row x={i} key={i} game={props.game} />);
+  const rows = props.game.board.map((row, i) => (
+    <Row x={i} key={i} game={props.game} handlePreviewUpdate={props.handlePreviewUpdate} />
+  ));
   return <div className="game-board">{rows}</div>;
 }
 
 function Row(props) {
   const tiles = props.game.board[props.x].map((tile, i) => (
-    <Tile x={props.x} y={i} key={i} game={props.game} />
+    <Tile
+      x={props.x}
+      y={i}
+      key={i}
+      game={props.game}
+      handlePreviewUpdate={props.handlePreviewUpdate}
+    />
   ));
   return <div className="row">{tiles}</div>;
 }
